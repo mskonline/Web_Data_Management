@@ -6,11 +6,23 @@
     <meta charset="utf-8"/>
     <script type="text/javascript" src="weather.js"></script>
   </head>
-  <body onload="initialize();">
+  <body>
     <form>
        <label>City: <input type="text" id="form-input"/></label>
        <input type="button" onclick="sendRequest();" value="Display Info"/>
     </form>
-    <div id="output">&nbsp;</div>
+    <div id="output" style="display:none">
+      <div>City : <span id="cityName"></span></div>
+      <div>Geo Cordinates : <span id="geoCordinates"></span></div>
+      <div>Sunrise : <span id="sunriseTime"></span></div>
+      <div>Sunset : <span id="sunsetTime"></span></div>
+      <div>Pressure : <span id="pressure"></span></div>
+      <div>Humidity : <span id="humidity"></span></div>
+      <div>Min Temperature : <span id="minTemperature"></span></div>
+      <div>Max Temperature : <span id="maxTemperature"></span></div>
+      <div>Visibility: <span id="visibility"></span></div>
+      <div>Clouds : <span id="clouds"></span></div>
+      <div>Adivse : <span id="advise"></span></div>
+    </div>
   </body>
 </html>
