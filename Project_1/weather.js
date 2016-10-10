@@ -1,3 +1,9 @@
+/*
+Student Name:  Sai Kumar Mankan
+ID: 1001236131
+Email: saikumar.manakan@mavs.uta.edu
+*/
+
 var api_key = "fe68ebb8ef6e83fa4d3208acab2b2d68";
 
 function sendRequest () {
@@ -17,7 +23,6 @@ function sendRequest () {
     };
     xhr.send(null);
 }
-
 
 function displayResults(resultJson){
   console.log(resultJson);
@@ -40,10 +45,10 @@ function displayResults(resultJson){
   elem.innerHTML = resultJson.main.humidity;
 
   elem = document.getElementById('minTemperature');
-  elem.innerHTML = resultJson.main.temp_min;
+  elem.innerHTML = resultJson.main.temp_min + ' Celcius';
 
   elem = document.getElementById('maxTemperature');
-  elem.innerHTML = resultJson.main.temp_max;
+  elem.innerHTML = resultJson.main.temp_max + ' Celcius';
 
   elem = document.getElementById('visibility');
   //elem.innerHTML = resultJson.;
