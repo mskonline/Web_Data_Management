@@ -12,6 +12,12 @@ function sendRequest () {
 
     var xhr = new XMLHttpRequest();
     var city = encodeURI(document.getElementById("form-input").value);
+
+    if(city === '') {
+      alert('Please enter city.');
+      return;
+    }
+
     xhr.open("GET", "proxy.php?q="+city+"&appid="+api_key+"&format=json&units=metric", true);
     xhr.setRequestHeader("Accept","application/json");
 
@@ -25,8 +31,18 @@ function sendRequest () {
 }
 
 function displayResults(resultJson){
-  console.log(resultJson);
-  var elem = document.getElementById('cityName');
+
+  if(resultJson == undefined){
+    alert('Something went wrong. Please try again');
+    return;
+  }
+
+  var body = document.body;
+  var elem = document.getElementById('wIcon');
+  var url = 'http://openweathermap.org/img/w/' + resultJson.weather[0].icon + '.png';
+  wIcon.style.backgroundImage = 'url('+ url + ')';
+
+  elem = document.getElementById('cityName');
   elem.innerHTML = resultJson.name;
 
   elem = document.getElementById('geoCordinates');
@@ -44,31 +60,51 @@ function displayResults(resultJson){
   elem = document.getElementById('humidity');
   elem.innerHTML = resultJson.main.humidity;
 
+  elem = document.getElementById('temperature');
+  elem.innerHTML = resultJson.main.temp + ' Celcius';
+
   elem = document.getElementById('minTemperature');
   elem.innerHTML = resultJson.main.temp_min + ' Celcius';
 
   elem = document.getElementById('maxTemperature');
   elem.innerHTML = resultJson.main.temp_max + ' Celcius';
 
-  elem = document.getElementById('visibility');
-  //elem.innerHTML = resultJson.;
-
   elem = document.getElementById('clouds');
   elem.innerHTML = resultJson.clouds.all;
 
-  var advise = "It's a clear day today";
   elem = document.getElementById('advise');
 
-  // Cloudy
-  if(resultJson.clouds.all > 60)
+  // Check the weather code.
+  if(willItRain(resultJson.weather[0].id)) {
     advise = "It might rain. Take an Umbrella";
-
-  // Cold weather
-  if(resultJson.main.temp_min < 10)
+  } // Cold weather
+  else if(resultJson.main.temp_min < 10) {
     advise = "It will be cold today. Wear a coat";
+  } // Clear day
+  else {
+    var advise = "It's a clear day today";
+  }
 
   elem.innerHTML = advise;
 
   elem = document.getElementById('output');
-  elem.style.display = "block";
+  elem.style.display = "inline-block";
+}
+
+function willItRain(weatherCode){
+  var code = String(weatherCode).charAt(0);
+
+  /*
+    From OpenWeather API doc.
+    https://openweathermap.org/weather-conditions
+    2xx - Thunderstorm
+    3xx - Drizzle
+    5xx - Rain
+  */
+
+  if(code >= 2 && code <=5)
+    return true;
+  else {
+    return false;
+  }
 }

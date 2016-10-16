@@ -13,15 +13,24 @@
     body{
       margin: 0;
       padding: 0;
+      background-color: #b9b9b9;
     }
     #app{
-      background:#B0C4DE;
+      background:#FFF;
       width: 50%;
       height: 350px;
       margin: 0 auto;
       padding: 5px;
       margin-top: 10px;
       border-radius: 10px;
+    }
+    #wIcon{
+      display: inline-block;
+      text-align: center;
+      width: 55px;
+      background-repeat: no-repeat;
+      background-position: 0;
+      height: 200px;
     }
     .label{
       font-weight: bold;
@@ -30,25 +39,32 @@
   </head>
   <body>
     <div id="app">
-      <h1 style="text-align:center"> City Weather </h1>
-      <hr/>
-      <form style="text-align:center">
-         <label>Enter your City: <input type="text" id="form-input"/></label>
-         <input type="button" onclick="sendRequest();" value="Get Weather"/>
-      </form>
-      <hr/>
-      <div id="output" style="display:none;">
-        <div>City : <span id="cityName"></span></div>
-        <div>Geo Cordinates : <span id="geoCordinates"></span></div>
-        <div>Sunrise : <span id="sunriseTime"></span></div>
-        <div>Sunset : <span id="sunsetTime"></span></div>
-        <div>Pressure : <span id="pressure"></span></div>
-        <div>Humidity : <span id="humidity"></span></div>
-        <div>Min Temperature : <span id="minTemperature"></span></div>
-        <div>Max Temperature : <span id="maxTemperature"></span></div>
-        <div>Visibility: <span id="visibility"></span></div>
-        <div>Clouds : <span id="clouds"></span></div>
-        <div>Adivse : <span id="advise"></span></div>
+
+      <div id="content">
+        <h1 style="text-align:center"> City Weather </h1>
+        <hr/>
+        <form style="text-align:center">
+           <label>Enter your City: <input type="text" id="form-input"/></label>
+           <input type="button" onclick="sendRequest();" value="< Weather >"/>
+        </form>
+        <hr/>
+        <div>
+          <div id="wIcon">
+          </div>
+          <div id="output" style="display:none;">
+            <div>City : <span id="cityName"></span></div>
+            <div>Geo Cordinates : <span id="geoCordinates"></span></div>
+            <div>Sunrise : <span id="sunriseTime"></span></div>
+            <div>Sunset : <span id="sunsetTime"></span></div>
+            <div>Pressure : <span id="pressure"></span></div>
+            <div>Humidity : <span id="humidity"></span></div>
+            <div>Temperature : <span id="temperature"></span></div>
+            <div>Min Temperature : <span id="minTemperature"></span></div>
+            <div>Max Temperature : <span id="maxTemperature"></span></div>
+            <div>Clouds : <span id="clouds"></span></div>
+            <div>Adivse : <span id="advise"></span></div>
+          </div>
+        </div>
       </div>
     </div>
   </body>
