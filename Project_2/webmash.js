@@ -1,6 +1,6 @@
 // Put your zillow.com API key here
 
-var username = "????";
+var username = "saikumarm";
 var request = new XMLHttpRequest();
 
 
@@ -8,19 +8,22 @@ var request = new XMLHttpRequest();
 function initMap() {
 
 	//initialize map
-	
+	map = new google.maps.Map(document.getElementById('map'), {
+		center: {lat: 32.75, lng: -97.13},
+		zoom: 17
+	});
 	//Initialize a mouse click event on map which then calls reversegeocode function
- 
+
 }
 
 
 
-// Reserse Geocoding 
+// Reserse Geocoding
 function reversegeocode() {
 
   //get the latitude and longitude from the mouse click and get the address.
-  //call geoname api asynchronously with latitude and longitude 
-  
+  //call geoname api asynchronously with latitude and longitude
+
 }// end of geocodeLatLng()
 
 
