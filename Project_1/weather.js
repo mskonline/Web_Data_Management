@@ -76,7 +76,7 @@ function displayResults(resultJson){
   elem.innerHTML = resultJson.name;
 
   elem = document.getElementById('geoCordinates');
-  elem.innerHTML = resultJson.coord.lat + ' ' + resultJson.coord.lon;
+  elem.innerHTML = resultJson.coord.lat + ' lat, ' + resultJson.coord.lon + ' lon';
 
   elem = document.getElementById('sunriseTime');
   elem.innerHTML = (new Date(resultJson.sys.sunrise * 1000));
@@ -85,10 +85,10 @@ function displayResults(resultJson){
   elem.innerHTML = (new Date(resultJson.sys.sunset * 1000));
 
   elem = document.getElementById('pressure');
-  elem.innerHTML = resultJson.main.pressure;
+  elem.innerHTML = resultJson.main.pressure + ' hPa';
 
   elem = document.getElementById('humidity');
-  elem.innerHTML = resultJson.main.humidity;
+  elem.innerHTML = resultJson.main.humidity + ' %';
 
   elem = document.getElementById('temperature');
   elem.innerHTML = resultJson.main.temp + units;
@@ -148,7 +148,7 @@ function findVisibility(weatherCode){
   /*
     From OpenWeather API doc.
     https://openweathermap.org/weather-conditions
-    2xx - Clear
+    8xx - Clear
     9xx - Extreme (as in Hotness, Coldness etc)
 
     For only 2xx, 9xx we will assume Good visibility else Bad
