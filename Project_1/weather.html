@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Student Name:  Sai Kumar Mankan
+  Student Name:  Manakan, Sai Kumar
   ID: 1001236131
   Email: saikumar.manakan@mavs.uta.edu
 -->
@@ -17,7 +17,7 @@
     }
     #app{
       background:#FFF;
-      width: 50%;
+      width: 52%;
       height: 350px;
       margin: 0 auto;
       padding: 5px;
@@ -37,16 +37,19 @@
     }
     </style>
   </head>
-  <body>
+  <body onload="initPage()">
     <div id="app">
-
       <div id="content">
         <h1 style="text-align:center"> City Weather </h1>
         <hr/>
-        <form style="text-align:center">
+        <div style="text-align:center">
            <label>Enter your City: <input type="text" id="form-input"/></label>
+           Units:
+           <input type="radio" id="def_units" name="units" value="default" checked>Default</input>
+           <input type="radio" id="met_units" name="units" value="metric">Metric</input>
+           <input type="radio" id="imp_units" name="units" value="imperial">Imperial</input>
            <input type="button" onclick="sendRequest();" value="< Weather >"/>
-        </form>
+        </div>
         <hr/>
         <div>
           <div id="wIcon">
@@ -62,6 +65,7 @@
             <div>Min Temperature : <span id="minTemperature"></span></div>
             <div>Max Temperature : <span id="maxTemperature"></span></div>
             <div>Clouds : <span id="clouds"></span></div>
+            <div>Visibility : <span id="visibility"></span></div>
             <div>Adivse : <span id="advise"></span></div>
           </div>
         </div>
