@@ -118,7 +118,7 @@ function displayResults(resultJson){
   if(willItRain(resultJson.weather[0].id)) {
     advise = "It might rain. Take an Umbrella";
   } // Cold weather
-  else if(resultJson.main.temp_min < min_temp) {
+  else if(resultJson.main.temp_min <= min_temp) {
     advise = "It will be cold today. Wear a coat";
   } // Clear day
   else {
