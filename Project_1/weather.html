@@ -48,12 +48,11 @@
            <input type="radio" id="def_units" name="units" value="default" checked>Default</input>
            <input type="radio" id="met_units" name="units" value="metric">Metric</input>
            <input type="radio" id="imp_units" name="units" value="imperial">Imperial</input>
-           <input type="button" onclick="sendRequest();" value="< Weather >"/>
+           <input type="button" onclick="sendRequest();" style="margin-left:5px" value=" Submit "/>
         </div>
         <hr/>
         <div>
-          <div id="wIcon">
-          </div>
+          <div id="wIcon"></div>
           <div id="output" style="display:none;">
             <div>City : <span id="cityName"></span></div>
             <div>Geo Cordinates : <span id="geoCordinates"></span></div>

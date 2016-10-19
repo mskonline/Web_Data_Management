@@ -64,7 +64,7 @@ function displayResults(resultJson){
   else if (document.getElementById('met_units').checked)
     units = ' Celcius';
   else {
-    units = ' Fahrenheit ';
+    units = ' Fahrenheit';
   }
 
   var body = document.body;
