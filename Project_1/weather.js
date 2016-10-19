@@ -59,12 +59,17 @@ function displayResults(resultJson){
   }
 
   var units;
-  if(document.getElementById('def_units').checked)
+  var min_temp; // Assumed Min temp (10 C) below which we advise to wear a coat
+
+  if(document.getElementById('def_units').checked){
     units = ' Kelvin';
-  else if (document.getElementById('met_units').checked)
+    min_temp = 283.15;
+  } else if (document.getElementById('met_units').checked){
     units = ' Celcius';
-  else {
+    min_temp = 10;
+  } else {
     units = ' Fahrenheit';
+    min_temp = 50;
   }
 
   var body = document.body;
@@ -113,7 +118,7 @@ function displayResults(resultJson){
   if(willItRain(resultJson.weather[0].id)) {
     advise = "It might rain. Take an Umbrella";
   } // Cold weather
-  else if(resultJson.main.temp_min < 10) {
+  else if(resultJson.main.temp_min < min_temp) {
     advise = "It will be cold today. Wear a coat";
   } // Clear day
   else {
@@ -151,7 +156,7 @@ function findVisibility(weatherCode){
     8xx - Clear
     9xx - Extreme (as in Hotness, Coldness etc)
 
-    For only 2xx, 9xx we will assume Good visibility else Bad
+    For 2xx, 9xx we will assume Good visibility otherwise Bad
     (All other codes eg Rain, Thunderstorm, Snow will have bad visibility)
   */
   if(code == 8 || code == 9)
