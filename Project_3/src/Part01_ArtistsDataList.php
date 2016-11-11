@@ -16,6 +16,12 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style media="screen">
+      body {
+        padding-top: 50px;
+        padding-bottom: 20px;
+      }
+    </style>
   </head>
   <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -59,9 +65,11 @@
       <p>
         <?php
           $db = new mysqli('localhost','root','','wdm_project3');
+          $db->query("SET NAMES 'utf8'");
           $sql = "SELECT artistid, firstname, lastname, yearofbirth, yearofdeath  FROM artists";
           $result =  $db->query($sql);
-
+          
+          header('Content-type: text/html; charset=utf-8');
           while($row = $result->fetch_assoc()) {
         ?>
         <a href="Part02_SingleArtist.php?id=<?php echo $row['artistid'];?>">

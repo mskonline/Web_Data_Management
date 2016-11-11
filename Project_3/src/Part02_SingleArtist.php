@@ -17,6 +17,11 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <style media="screen">
+      body {
+        padding-top: 50px;
+        padding-bottom: 20px;
+      }
+
       .description{
         text-align: justify;
       }
@@ -27,7 +32,7 @@
 
       .topBox {
         border: solid 1px lightgray;
-        /* padding: 20px; */
+        height: 235px;
         width: 22%;
         font-size: 12px;
         margin-left: 23px;
@@ -107,9 +112,12 @@
           if(isset($_GET['id'])){
             $artistId = $_GET['id'];
             $db = new mysqli('localhost','root','','wdm_project3');
+            $db->query("SET NAMES 'utf8'");
             $sql = "SELECT *  FROM artists WHERE artistid=".$artistId;
+
             $result =  $db->query($sql);
             $row = $result->fetch_assoc();
+            header('Content-type: text/html; charset=utf-8');
 
             if(count($row) > 0){
               $artistName = $row['FirstName'].' '.$row['LastName'];
@@ -164,7 +172,7 @@
                       echo '</div>';
                       echo '<div class="linkBox"><a href="">'.$row['Title'].', '.$row['YearOfWork'].'</a></div>';
                       echo '<div class="buttonBox">';
-                        echo '<button type="button" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-info-sign white"></span> View</button>';
+                        echo '<button type="button" onclick="location.href=\'Part03_SingleWork.php?id='.$row['ArtWorkID'].'\'" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-info-sign white"></span> View</button>';
                         echo '<button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-gift white"></span> Wish</button>';
                         echo '<button type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-shopping-cart white"></span> Cart</button>';
                       echo '</div>';
