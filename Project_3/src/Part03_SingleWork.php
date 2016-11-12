@@ -72,25 +72,19 @@
   <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">Assignment 3</a>
+        <a class="navbar-brand" href="./">Assignment 3</a>
       </div>
       <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
           <li class="active"><a href="./">Home</a></li>
-          <li><a href="#about">About Us</a></li>
+          <li><a href="About.php">About Us</a></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Pages <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="Part01_ArtistsDataList.php">Artists Data List (Part 1)</a></li>
-              <li><a href="#">Single Artist (Part 2)</a></li>
-              <li><a href="#">Single Work (Part 3)</a></li>
-              <li><a href="#">Search (Part 4)</a></li>
+              <li><a href="Part02_SingleArtist.php?id=1">Single Artist (Part 2)</a></li>
+              <li><a href="Part03_SingleWork.php?id=1">Single Work (Part 3)</a></li>
+              <li><a href="Part04_Search.php">Search (Part 4)</a></li>
             </ul>
           </li>
         </ul>
@@ -99,11 +93,15 @@
             <label for="searchPaintings" style="color:#9d9d9d;padding-right:5px;">Sai Kumar Manakan </label>
             <input type="text" id="searchPaintings" placeholder="Search Paintings" class="form-control">
           </div>
-          <button type="submit" class="btn btn-primary">Search</button>
+          <button id="searchPaintingsBtn" class="btn btn-primary">Search</button>
         </form>
       </div><!--/.nav-collapse -->
     </div>
   </nav>
+  <div class="alert alert-danger collapse alert-dismissible" role="alert" id="errorMessageDiag">
+      <button type="button" class="close" ><span id="closeBtn" aria-hidden="true">×</span></button>
+      <p id="errorMessage"></p>
+  </div>
 
   <div class="container">
     <?php
@@ -251,5 +249,25 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <!-- Include all compiled plugins (below), or include individual files as needed -->
   <script src="js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#searchPaintingsBtn').click(function(e){
+        e.preventDefault();
+        var input = $('#searchPaintings').val();
+
+        if(input == ''){
+          $('#errorMessage').html('Please enter an artwork title');
+          $('#errorMessageDiag').slideDown('fast',function(){
+            $('#closeBtn').click(function(){
+              $('#errorMessageDiag').slideUp();
+            });
+          });
+          return;
+        }
+
+        location.href = "Part04_Search.php?title=" + input;
+      });
+    });
+  </script>
 </body>
 </html>

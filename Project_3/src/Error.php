@@ -59,9 +59,7 @@
     </div>
     <div class="container">
       <div class="well">
-        <h1>Assignment 3</h1>
-        <h2>By Sai Kumar Manakan</h2>
-        <h5><script>document.write(new Date());</script></h5>
+        <h1>Error</h1>
       </div>
     </div>
 
