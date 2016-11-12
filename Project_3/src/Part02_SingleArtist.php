@@ -66,6 +66,12 @@
         color: #fff;
       }
 
+      .icon-flipped{
+        transform: scaleX(-1);
+        -moz-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        -ms-transform: scaleX(-1);
+      }
     </style>
   </head>
   <body>
@@ -174,7 +180,7 @@
                       echo '<div class="buttonBox">';
                         echo '<button type="button" onclick="location.href=\'Part03_SingleWork.php?id='.$row['ArtWorkID'].'\'" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-info-sign white"></span> View</button>';
                         echo '<button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-gift white"></span> Wish</button>';
-                        echo '<button type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-shopping-cart white"></span> Cart</button>';
+                        echo '<button type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-shopping-cart icon-flipped white"></span> Cart</button>';
                       echo '</div>';
                   echo '</div>';
                 }

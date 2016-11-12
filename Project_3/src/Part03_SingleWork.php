@@ -22,15 +22,49 @@
       padding-top: 50px;
       padding-bottom: 20px;
     }
+
     .description{
       text-align: justify;
     }
-    .artWorktTable{
-      margin-top: 20px;
+
+    .optButton{
+      color: #428bca;
+      font-weight: bold;
+      margin-right: 10px;
     }
 
-    .salesTable{
+    #artWorktTable{
+      margin-top: 20px;
+      border: 1px solid #ddd;
+    }
 
+    #artWorktTable th {
+      font-weight: bold;
+      border-top:1px solid #ddd;
+    }
+
+    #artWorktTable td {
+      border-top:1px solid #ddd;
+    }
+
+    #salesTable td, #salesTable th {
+      border: none;
+    }
+
+    #salesTable th{
+      color: #428bca;
+    }
+
+    #salesTable.table {
+        border: 2px solid #d9edf7;
+        border-collapse:inherit;
+    }
+
+    .icon-flipped{
+      transform: scaleX(-1);
+      -moz-transform: scaleX(-1);
+      -webkit-transform: scaleX(-1);
+      -ms-transform: scaleX(-1);
     }
   </style>
 </head>
@@ -74,6 +108,7 @@
   <div class="container">
     <?php
     $row = NULL;
+    $artistName = "";
     $imgTitle = "";
     $largeImageSrc = "";
 
@@ -82,83 +117,115 @@
         $artworkId = $_GET['id'];
         $db = new mysqli('localhost','root','','wdm_project3');
         $db->query("SET NAMES 'utf8'");
+
         $sql = "SELECT *  FROM artworks WHERE artworkid=".$artworkId;
+        $genreSQL = "SELECT g.GenreName FROM genres g, artworkgenres ag WHERE ag.ArtWorkID = $artworkId AND ag.GenreID = g.GenreID";
+        $subjectsSQL = "SELECT sb.SubjectName FROM subjects sb, artworksubjects asb WHERE asb.ArtWorkID = $artworkId AND asb.SubjectID = sb.SubjectId";
+        $ordersSQL = "SELECT ord.DateCreated FROM orders ord, orderdetails orddt WHERE orddt.ArtWorkID = $artworkId AND orddt.OrderID = ord.OrderID";
+
         $result =  $db->query($sql);
         $row = $result->fetch_assoc();
         header('Content-type: text/html; charset=utf-8');
 
         if(count($row) > 0) {
-          echo '<h2>'.$row['Title'].'</h2>';
-          echo '<h6>By <a href=""></a></h6>';
+          $artistNameSQL = "SELECT FirstName, LastName FROM artists WHERE ArtistID=".$row['ArtistID'];
+          $result = $db->query($artistNameSQL);
+          $data = $result->fetch_assoc();
+          $artistName = $data['FirstName'].' '.$data['LastName'];
 
-          //echo '<div class="container">';
-            echo '<div class="row">';
+          echo '<h2>'.$row['Title'].'</h2>';
+          echo '<h6>By <a href="Part02_SingleArtist.php?id='.$row['ArtistID'].'">'.$artistName.'</a></h6>';
+          echo '<div class="row">';
 
             echo '<div class="col-md-4">';
               echo '<img src="./images/art/works/medium/'.$row['ImageFileName'].'.jpg" class="" data-toggle="modal" data-target="#myModal"/>';
-            echo '</div>';
+            echo '</div>'; // col-md-2=4
 
             echo '<div class="col-md-6">';
               echo '<p class="description"> '.$row['Description'].'</p>';
               echo '<p style="color:red;font-size:16px;font-weight:bold;">$'.sprintf("%.2f", $row['Cost']).'</p>';
-              echo '<button type="button" style="color:#428bca;margin-right:10px;" class="btn btn-default">&hearts; Add to Wish List</button>';
-              echo '<button type="button" style="color:#428bca" class="btn btn-default">&hearts; Add to Shopping cart</button>';
-              echo '<table class="table table-hover table-bordered artWorktTable">';
+              echo '<button type="button" class="btn btn-default optButton"><span class="glyphicon glyphicon-gift"></span> Add to Wish List</button>';
+              echo '<button type="button" class="btn btn-default optButton"><span class="glyphicon glyphicon-shopping-cart icon-flipped"></span> Add to Shopping cart</button>';
+              echo '<table class="table table-hover" id="artWorktTable">';
                 echo '<thead>';
                 echo '<tr>';
-                echo '<th style="height:45px;" class="active" colspan="2"> Product Details </th>';
+                echo '<th style="height:45px;font-weight:normal;" class="active" colspan="2"> Product Details </th>';
                 echo '</tr>';
                 echo '</thead>';
                 echo '<tbody>';
                 echo '<tr>';
-                echo '<th> Date : </th>';
+                echo '<th> Date: </th>';
                 echo '<td> '.$row['YearOfWork'].' </td>';
                 echo '</tr>';
                 echo '<tr>';
-                echo '<th> Medium : </th>';
+                echo '<th> Medium: </th>';
                 echo '<td> '.$row['Medium'].' </td>';
                 echo '</tr>';
                 echo '<tr>';
-                echo '<th> Dimensions : </th>';
+                echo '<th> Dimensions: </th>';
                 echo '<td> '.$row['Width'].'cm X '.$row['Height'].'cm </td>';
                 echo '</tr>';
                 echo '<tr>';
-                echo '<th> Home : </th>';
+                echo '<th> Home: </th>';
                 echo '<td> '.$row['OriginalHome'].' </td>';
                 echo '</tr>';
                 echo '<tr>';
-                echo '<th> Genres : </th>';
-                echo '<td> '.$row['Medium'].' </td>';
+                  echo '<th> Genres: </th>';
+                  $res = $db->query($genreSQL);
+                  echo '<td>';
+                    while ($data = $res->fetch_assoc()) {
+                      echo '<a href="#">'.$data['GenreName'].'</a><br>';
+                    }
+                  echo '</td>';
+                  $res->close();
                 echo '</tr>';
                 echo '<tr>';
-                echo '<th> Subjects : </th>';
-                echo '<td> '.$row['Medium'].' </td>';
-                echo '</tr>';
+                  echo '<th> Subjects : </th>';
+                  $res = $db->query($subjectsSQL);
+                  echo '<td>';
+                    while ($data = $res->fetch_assoc()) {
+                      echo '<a href="#">'.$data['SubjectName'].'</a><br>';
+                    }
+                  echo '</td>';
+                  $res->close();
+                  echo '</tr>';
                 echo '</tbody>';
               echo '</table>'; // Table
-            echo '</div>';
+            echo '</div>'; // col-md-6
+
+            $res = $db->query($ordersSQL);
 
             echo '<div class="col-md-2">';
-            echo '<table class="table table-hover table-bordered salesTable">';
-              echo '<thead>';
-              echo '<tr>';
-              echo '<th style="height:45px;" class="info" colspan="2"> Sales </th>';
-              echo '</tr>';
-              echo '</thead>';
-              echo '<tbody>';
-              echo '<tr>';
-              echo '<td> 7/7/2016 </td>';
-              echo '</tr>';
-              echo '</tbody>';
-            echo '</table>'; // Table
-            echo '</div>';
+              echo '<table class="table" id="salesTable">';
+                echo '<thead>';
+                  echo '<tr>';
+                    echo '<th style="height:38px;border:none;" class="info" colspan="2"> Sales </th>';
+                  echo '</tr>';
+                echo '</thead>';
+                echo '<tbody>';
+                while ($data = $res->fetch_assoc()) {
+                  echo '<tr>';
+                  $dateFromDB = strtotime($data['DateCreated']);
+                  $myFormatForView = date("m/d/y", $dateFromDB);
+                  echo '<td><a href="#">'.$myFormatForView.'</a></td>';
+                  echo '</tr>';
+                }
 
-            echo '</div>';
-          //echo '</div>';
+                $res->close();
+                echo '</tbody>';
+              echo '</table>'; // Table
+            echo '</div>'; // col-md-2
 
-          $imgTitle = $row['Title'].' ('.$row['YearOfWork'].') by ';//TODO
+          echo '</div>'; // row
+
+          $imgTitle = $row['Title'].' ('.$row['YearOfWork'].') by '.$artistName;
           $largeImageSrc = './images/art/works/medium/'.$row['ImageFileName'].'.jpg';
+        } else {
+          echo '<h1>No data found.</h1>';
         }
+
+        $result->close();
+        $db->close();
       }
     }
     ?>
