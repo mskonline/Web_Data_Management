@@ -1,72 +1,23 @@
+<!--
+  Student Name:  Manakan, Sai Kumar
+  ID: 1001236131
+  Email: saikumar.manakan@mavs.uta.edu
+	Project Name: Database-Driven Web Pages
+  Due date: Nov 18 2016
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <title>CS 5335 - Assignment 3</title>
-
-  <!-- Bootstrap -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
-
-  <style media="screen">
-    body {
-      padding-top: 50px;
-      padding-bottom: 20px;
-    }
-
-    .description{
-      text-align: justify;
-    }
-
-    .optButton{
-      color: #428bca;
-      font-weight: bold;
-      margin-right: 10px;
-    }
-
-    #artWorktTable{
-      margin-top: 20px;
-      border: 1px solid #ddd;
-    }
-
-    #artWorktTable th {
-      font-weight: bold;
-      border-top:1px solid #ddd;
-    }
-
-    #artWorktTable td {
-      border-top:1px solid #ddd;
-    }
-
-    #salesTable td, #salesTable th {
-      border: none;
-    }
-
-    #salesTable th{
-      color: #428bca;
-    }
-
-    #salesTable.table {
-        border: 2px solid #d9edf7;
-        border-collapse:inherit;
-    }
-
-    .icon-flipped{
-      transform: scaleX(-1);
-      -moz-transform: scaleX(-1);
-      -webkit-transform: scaleX(-1);
-      -ms-transform: scaleX(-1);
-    }
-  </style>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
 </head>
 <body>
   <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -76,21 +27,21 @@
       </div>
       <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="./">Home</a></li>
+          <li><a href="./">Home</a></li>
           <li><a href="About.php">About Us</a></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Pages <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="Part01_ArtistsDataList.php">Artists Data List (Part 1)</a></li>
               <li><a href="Part02_SingleArtist.php?id=1">Single Artist (Part 2)</a></li>
-              <li><a href="Part03_SingleWork.php?id=1">Single Work (Part 3)</a></li>
+              <li class="active"><a href="Part03_SingleWork.php?id=1">Single Work (Part 3)</a></li>
               <li><a href="Part04_Search.php">Search (Part 4)</a></li>
             </ul>
           </li>
         </ul>
         <form class="navbar-form navbar-right">
           <div class="form-group">
-            <label for="searchPaintings" style="color:#9d9d9d;padding-right:5px;">Sai Kumar Manakan </label>
+            <label for="searchPaintings" style="color:#9d9d9d;padding-right:5px;"><span data-placement="bottom" data-toggle="tooltip" data-original-title="UTA ID - 1001236131">Sai Kumar Manakan</span></label>
             <input type="text" id="searchPaintings" placeholder="Search Paintings" class="form-control">
           </div>
           <button id="searchPaintingsBtn" class="btn btn-primary">Search</button>
@@ -99,8 +50,8 @@
     </div>
   </nav>
   <div class="alert alert-danger collapse alert-dismissible" role="alert" id="errorMessageDiag">
-      <button type="button" class="close" ><span id="closeBtn" aria-hidden="true">×</span></button>
-      <p id="errorMessage"></p>
+      <button type="button" class="close" id="closeBtn"><span aria-hidden="true">×</span></button>
+      <p style="text-align:center"><span class="glyphicon glyphicon-exclamation-sign"></span> <span id="errorMessage"></span></p>
   </div>
 
   <div class="container">
@@ -136,12 +87,12 @@
           echo '<div class="row">';
 
             echo '<div class="col-md-4">';
-              echo '<img src="./images/art/works/medium/'.$row['ImageFileName'].'.jpg" class="" data-toggle="modal" data-target="#myModal"/>';
+              echo '<img src="./images/art/works/medium/'.$row['ImageFileName'].'.jpg" class="img-responsive img-thumbnail img-handle" data-toggle="modal" data-target="#myModal"/>';
             echo '</div>'; // col-md-2=4
 
             echo '<div class="col-md-6">';
               echo '<p class="description"> '.$row['Description'].'</p>';
-              echo '<p style="color:red;font-size:16px;font-weight:bold;">$'.sprintf("%.2f", $row['Cost']).'</p>';
+              echo '<p style="color:red;font-size:16px;font-weight:bold;">$'.sprintf("%.2f", $row['MSRP']).'</p>';
               echo '<button type="button" class="btn btn-default optButton"><span class="glyphicon glyphicon-gift"></span> Add to Wish List</button>';
               echo '<button type="button" class="btn btn-default optButton"><span class="glyphicon glyphicon-shopping-cart icon-flipped"></span> Add to Shopping cart</button>';
               echo '<table class="table table-hover" id="artWorktTable">';
@@ -161,7 +112,7 @@
                 echo '</tr>';
                 echo '<tr>';
                 echo '<th> Dimensions: </th>';
-                echo '<td> '.$row['Width'].'cm X '.$row['Height'].'cm </td>';
+                echo '<td> '.$row['Width'].'cm × '.$row['Height'].'cm </td>';
                 echo '</tr>';
                 echo '<tr>';
                 echo '<th> Home: </th>';
@@ -178,7 +129,7 @@
                   $res->close();
                 echo '</tr>';
                 echo '<tr>';
-                  echo '<th> Subjects : </th>';
+                  echo '<th> Subjects: </th>';
                   $res = $db->query($subjectsSQL);
                   echo '<td>';
                     while ($data = $res->fetch_assoc()) {
@@ -224,6 +175,12 @@
 
         $result->close();
         $db->close();
+      } else {
+        if (headers_sent() === false)
+        {
+            header('Location: Error.php');
+            die();
+        }
       }
     }
     ?>
@@ -236,7 +193,7 @@
             <h4 class="modal-title"><?php echo $imgTitle; ?></h4>
           </div>
           <div class="modal-body">
-            <img src="<?php echo $largeImageSrc;?>" class="center-block" alt="<?php echo $title; ?>" />
+            <img src="<?php echo $largeImageSrc;?>" class="img-responsive center-block" alt="<?php echo $title; ?>" />
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -245,23 +202,28 @@
       </div>
     </div> <!-- modal -->
   </div><!-- container -->
-  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <!-- Include all compiled plugins (below), or include individual files as needed -->
   <script src="js/bootstrap.min.js"></script>
   <script type="text/javascript">
     $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();
+
+      $('#searchPaintings').focus(function(){
+        $('#errorMessageDiag').slideUp();
+      });
+
+      $('#closeBtn').click(function(){
+        $('#errorMessageDiag').slideUp();
+      });
+
       $('#searchPaintingsBtn').click(function(e){
         e.preventDefault();
         var input = $('#searchPaintings').val();
 
         if(input == ''){
           $('#errorMessage').html('Please enter an artwork title');
-          $('#errorMessageDiag').slideDown('fast',function(){
-            $('#closeBtn').click(function(){
-              $('#errorMessageDiag').slideUp();
-            });
-          });
+          $('#errorMessageDiag').slideDown();
           return;
         }
 

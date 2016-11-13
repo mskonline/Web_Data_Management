@@ -1,44 +1,23 @@
+<!--
+  Student Name:  Manakan, Sai Kumar
+  ID: 1001236131
+  Email: saikumar.manakan@mavs.uta.edu
+	Project Name: Database-Driven Web Pages
+  Due date: Nov 18 2016
+-->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>CS 5335 - Assignment 3</title>
-
-    <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <style media="screen">
-      body {
-        padding-top: 50px;
-        padding-bottom: 20px;
-      }
-
-      h4 {
-        margin-top: 0px;
-      }
-
-      p {
-        text-align: justify;
-      }
-
-      .thumbnailx{
-        padding: 0;
-        border: none;
-      }
-
-      mark{
-        background: yellow;
-      }
-    </style>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
   </head>
   <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -48,7 +27,7 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="./">Home</a></li>
+            <li><a href="./">Home</a></li>
             <li><a href="About.php">About Us</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Pages <span class="caret"></span></a>
@@ -56,13 +35,13 @@
                 <li><a href="Part01_ArtistsDataList.php">Artists Data List (Part 1)</a></li>
                 <li><a href="Part02_SingleArtist.php?id=1">Single Artist (Part 2)</a></li>
                 <li><a href="Part03_SingleWork.php?id=1">Single Work (Part 3)</a></li>
-                <li><a href="Part04_Search.php">Search (Part 4)</a></li>
+                <li class="active"><a href="Part04_Search.php">Search (Part 4)</a></li>
               </ul>
             </li>
           </ul>
           <form class="navbar-form navbar-right">
             <div class="form-group">
-              <label for="searchPaintings" style="color:#9d9d9d;padding-right:5px;">Sai Kumar Manakan </label>
+              <label for="searchPaintings" style="color:#9d9d9d;padding-right:5px;"><span data-placement="bottom" data-toggle="tooltip" data-original-title="UTA ID - 1001236131">Sai Kumar Manakan</span></label>
               <input type="text" id="searchPaintings" placeholder="Search Paintings" class="form-control">
             </div>
             <button id="searchPaintingsBtn" class="btn btn-primary">Search</button>
@@ -71,8 +50,8 @@
       </div>
     </nav>
     <div class="alert alert-danger collapse alert-dismissible" role="alert" id="errorMessageDiag">
-        <button type="button" class="close" ><span id="closeBtn" aria-hidden="true">×</span></button>
-        <p id="errorMessage"></p>
+        <button type="button" class="close" id="closeBtn"><span aria-hidden="true">×</span></button>
+        <p style="text-align:center"><span class="glyphicon glyphicon-exclamation-sign"></span> <span id="errorMessage"></span></p>
     </div>
     <?php
       $titleSet = isset($_GET['title']);
@@ -82,7 +61,7 @@
       $anySet = $titleSet || $descriptionSet || $showAll;
      ?>
     <div class="container">
-      <h2>Search</h2>
+      <h2>Search Results</h2>
 
       <div class="well">
         <form class="" id="fitlerForm" action="Part04_Search.php" method="get">
@@ -95,9 +74,9 @@
             </div>
             <?php
               if($titleSet){
-                echo '<input type="text" class="form-control" placeholder="Text input" value="'.$_GET['title'].'" id="filterByTitleInp"/>';
+                echo '<input type="text" class="form-control" value="'.$_GET['title'].'" id="filterByTitleInp"/>';
               } else {
-                echo '<input type="text" class="form-control" placeholder="Text input" id="filterByTitleInp" style="display:none">';
+                echo '<input type="text" class="form-control" id="filterByTitleInp" style="display:none">';
               }
              ?>
           </div>
@@ -110,9 +89,9 @@
             </div>
             <?php
               if($descriptionSet){
-                echo '<input type="text" class="form-control" placeholder="Text input" value="'.$_GET['description'].'" id="filterByDescInp"/>';
+                echo '<input type="text" class="form-control" value="'.$_GET['description'].'" id="filterByDescInp"/>';
               } else {
-                echo '<input type="text" class="form-control" placeholder="Text input" style="display:none" id="filterByDescInp">';
+                echo '<input type="text" class="form-control" style="display:none" id="filterByDescInp">';
               }
              ?>
           </div>
@@ -120,7 +99,7 @@
             <div class="radio">
               <label>
                 <input type="radio" name="optionsRadios" id="filterByAll" value="option3">
-                No Filter (Show all the artworks)
+                No Filter (Show all art works)
               </label>
             </div>
           </div>
@@ -152,7 +131,7 @@
               echo '<div class="col-md-2">';
                 echo '<div class="thumbnailx thumbnail">';
                     echo '<a href="Part03_SingleWork.php?id='.$row['ArtWorkID'].'" >';
-                      echo '<img src="./images/art/works/square-medium/'.$row['ImageFileName'].'.jpg" class=" center-block">';
+                      echo '<img src="./images/art/works/square-medium/'.$row['ImageFileName'].'.jpg" class="img-handle center-block">';
                     echo '</a>';
                 echo '</div>';
               echo '</div>';
@@ -160,15 +139,15 @@
               echo '<div class="col-md-10">';
                 if($titleSet){
                   $highlightText = preg_replace('/('.$_GET['title'].')/i', '<mark>$1</mark>', $row['Title']);
-                  echo '<h4><a href="Part03_SingleWork.php?id='.$row['ArtWorkID'].'" >'.$highlightText.'</a></h4>';
-                  echo '<p>'.$row['Description'].'</p>';
+                  echo '<h4 class="titleHeader"><a href="Part03_SingleWork.php?id='.$row['ArtWorkID'].'" >'.$highlightText.'</a></h4>';
+                  echo '<p class="text-justify">'.$row['Description'].'</p>';
                 } else if ($descriptionSet){
-                  echo '<h4><a href="Part03_SingleWork.php?id='.$row['ArtWorkID'].'" >'.$row['Title'].'</a></h4>';
+                  echo '<h4 class="titleHeader"><a href="Part03_SingleWork.php?id='.$row['ArtWorkID'].'" >'.$row['Title'].'</a></h4>';
                   $highlightText = preg_replace('/('.$_GET['description'].')/i', '<mark>$1</mark>', $row['Description']);
-                  echo '<p>'.$highlightText.'</p>';
+                  echo '<p class="text-justify">'.$highlightText.'</p>';
                 } else {
-                  echo '<h4><a href="Part03_SingleWork.php?id='.$row['ArtWorkID'].'" >'.$row['Title'].'</a></h4>';
-                  echo '<p>'.$row['Description'].'</p>';
+                  echo '<h4 class="titleHeader"><a href="Part03_SingleWork.php?id='.$row['ArtWorkID'].'" >'.$row['Title'].'</a></h4>';
+                  echo '<p class="text-justify">'.$row['Description'].'</p>';
                 }
 
               echo '</div>';
@@ -177,12 +156,13 @@
         }
       ?>
     </div>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
     <script>
     $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();
+
       var filterByTitleRB = $('#filterByTitleRB');
       var filterByTitleInp = $('#filterByTitleInp');
 
@@ -214,17 +194,21 @@
         }
       });
 
+      $('#searchPaintings').focus(function(){
+        $('#errorMessageDiag').slideUp();
+      });
+
+      $('#closeBtn').click(function(){
+        $('#errorMessageDiag').slideUp();
+      });
+
       $('#searchPaintingsBtn').click(function(e){
         e.preventDefault();
         var input = $('#searchPaintings').val();
 
         if(input == ''){
           $('#errorMessage').html('Please enter an artwork title');
-          $('#errorMessageDiag').slideDown('fast',function(){
-            $('#closeBtn').click(function(){
-              $('#errorMessageDiag').slideUp();
-            });
-          });
+          $('#errorMessageDiag').slideDown();
           return;
         }
 
