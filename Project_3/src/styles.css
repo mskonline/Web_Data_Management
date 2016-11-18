@@ -2,11 +2,12 @@
   Student Name:  Manakan, Sai Kumar
   ID: 1001236131
   Email: saikumar.manakan@mavs.uta.edu
-	Project Name: Database-Driven Web Pages
-  Due date: Nov 18 2016
+  Project Name: Database-Driven Web Pages
+  Due date: Nov 20 2016
 */
 
 /* Default.php */
+
 body {
   padding-top: 50px;
   padding-bottom: 20px;
@@ -24,7 +25,13 @@ body {
   font-size: 28px;
 }
 
-/* Par02_SingleArtwork.php*/
+/* Part01_ArtistsDataList.php */
+
+.artistsList {
+  margin-top: 15px;
+}
+
+/* Par02_SingleArtwork.php */
 
 .description {
   text-align: justify;
@@ -117,7 +124,7 @@ body {
   cursor: pointer;
 }
 
-/* Search.php */
+/* Part04_Search.php */
 
 .titleHeader {
   margin-top: 0px;

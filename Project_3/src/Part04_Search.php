@@ -2,9 +2,18 @@
   Student Name:  Manakan, Sai Kumar
   ID: 1001236131
   Email: saikumar.manakan@mavs.uta.edu
-	Project Name: Database-Driven Web Pages
-  Due date: Nov 18 2016
+  Project Name: Database-Driven Web Pages
+  Due date: Nov 20 2016
 -->
+<?php
+  $HOSTNAME = 'localhost';
+  $DATABASE = 'wdm_project3';
+  $USERNAME = 'root';
+  $PASSWORD = '';
+
+  $IMGSRC_WORKS_SQR_MEDIUM = './images/art/works/square-medium/';
+  $IMG_FORMAT = '.jpg';
+ ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -33,8 +42,8 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Pages <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="Part01_ArtistsDataList.php">Artists Data List (Part 1)</a></li>
-                <li><a href="Part02_SingleArtist.php?id=1">Single Artist (Part 2)</a></li>
-                <li><a href="Part03_SingleWork.php?id=1">Single Work (Part 3)</a></li>
+                <li><a href="Part02_SingleArtist.php?id=19">Single Artist (Part 2)</a></li>
+                <li><a href="Part03_SingleWork.php?id=394">Single Work (Part 3)</a></li>
                 <li class="active"><a href="Part04_Search.php">Search (Part 4)</a></li>
               </ul>
             </li>
@@ -53,6 +62,7 @@
         <button type="button" class="close" id="closeBtn"><span aria-hidden="true">×</span></button>
         <p style="text-align:center"><span class="glyphicon glyphicon-exclamation-sign"></span> <span id="errorMessage"></span></p>
     </div>
+
     <?php
       $titleSet = isset($_GET['title']);
       $descriptionSet = isset($_GET['description']);
@@ -117,21 +127,22 @@
           $sql = "SELECT ArtWorkID, Title, Description, ImageFileName from artworks";
 
           if($titleSet)
-            $sql = $sql.' WHERE Title like \'%'.$_GET['title'].'%\'';
+            $sql = $sql.' WHERE Title LIKE \'%'.$_GET['title'].'%\'';
           else if($descriptionSet)
-            $sql = $sql.' WHERE Description like \'%'.$_GET['description'].'%\'';
+            $sql = $sql.' WHERE Description LIKE \'%'.$_GET['description'].'%\'';
 
-          $db = new mysqli('localhost','root','','wdm_project3');
+          $db = new mysqli($HOSTNAME, $USERNAME, $PASSWORD, $DATABASE);
           $db->query("SET NAMES 'utf8'");
           $result =  $db->query($sql);
+          $count = 0;
 
-          //header('Content-type: text/html; charset=utf-8');
           while ($row = $result->fetch_assoc()) {
+            ++ $count;
             echo '<div class="row" style="margin-bottom:8px">';
               echo '<div class="col-md-2">';
                 echo '<div class="thumbnailx thumbnail">';
                     echo '<a href="Part03_SingleWork.php?id='.$row['ArtWorkID'].'" >';
-                      echo '<img src="./images/art/works/square-medium/'.$row['ImageFileName'].'.jpg" class="img-handle center-block">';
+                      echo '<img src="'.$IMGSRC_WORKS_SQR_MEDIUM.$row['ImageFileName'].$IMG_FORMAT.'" class="img-handle center-block">';
                     echo '</a>';
                 echo '</div>';
               echo '</div>';
@@ -149,9 +160,12 @@
                   echo '<h4 class="titleHeader"><a href="Part03_SingleWork.php?id='.$row['ArtWorkID'].'" >'.$row['Title'].'</a></h4>';
                   echo '<p class="text-justify">'.$row['Description'].'</p>';
                 }
-
               echo '</div>';
             echo '</div>';
+          }
+
+          if($count == 0){
+            echo '<h3>No matching results found</h3>';
           }
         }
       ?>

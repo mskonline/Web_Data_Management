@@ -2,9 +2,15 @@
   Student Name:  Manakan, Sai Kumar
   ID: 1001236131
   Email: saikumar.manakan@mavs.uta.edu
-	Project Name: Database-Driven Web Pages
-  Due date: Nov 18 2016
+  Project Name: Database-Driven Web Pages
+  Due date: Nov 20 2016
 -->
+<?php
+  $HOSTNAME = 'localhost';
+  $DATABASE = 'wdm_project3';
+  $USERNAME = 'root';
+  $PASSWORD = '';
+ ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -33,8 +39,8 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Pages <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li class="active"><a href="Part01_ArtistsDataList.php">Artists Data List (Part 1)</a></li>
-                <li><a href="Part02_SingleArtist.php?id=1">Single Artist (Part 2)</a></li>
-                <li><a href="Part03_SingleWork.php?id=1">Single Work (Part 3)</a></li>
+                <li><a href="Part02_SingleArtist.php?id=19">Single Artist (Part 2)</a></li>
+                <li><a href="Part03_SingleWork.php?id=394">Single Work (Part 3)</a></li>
                 <li><a href="Part04_Search.php">Search (Part 4)</a></li>
               </ul>
             </li>
@@ -56,9 +62,9 @@
 
     <div class="container">
       <h2>Artists Data List (Part 1)</h2>
-      <p>
+      <p class="artistsList">
         <?php
-          $db = new mysqli('localhost','root','','wdm_project3');
+          $db = new mysqli($HOSTNAME, $USERNAME, $PASSWORD, $DATABASE);
           $db->query("SET NAMES 'utf8'");
           $sql = "SELECT artistid, firstname, lastname, yearofbirth, yearofdeath  FROM artists order by lastname";
           $result =  $db->query($sql);

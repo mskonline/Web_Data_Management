@@ -2,8 +2,8 @@
   Student Name:  Manakan, Sai Kumar
   ID: 1001236131
   Email: saikumar.manakan@mavs.uta.edu
-	Project Name: Database-Driven Web Pages
-  Due date: Nov 18 2016
+  Project Name: Database-Driven Web Pages
+  Due date: Nov 20 2016
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -33,8 +33,8 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Pages <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="Part01_ArtistsDataList.php">Artists Data List (Part 1)</a></li>
-                <li><a href="Part02_SingleArtist.php?id=1">Single Artist (Part 2)</a></li>
-                <li><a href="Part03_SingleWork.php?id=1">Single Work (Part 3)</a></li>
+                <li><a href="Part02_SingleArtist.php?id=19">Single Artist (Part 2)</a></li>
+                <li><a href="Part03_SingleWork.php?id=394">Single Work (Part 3)</a></li>
                 <li><a href="Part04_Search.php">Search (Part 4)</a></li>
               </ul>
             </li>

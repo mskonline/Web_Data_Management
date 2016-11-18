@@ -2,9 +2,20 @@
   Student Name:  Manakan, Sai Kumar
   ID: 1001236131
   Email: saikumar.manakan@mavs.uta.edu
-	Project Name: Database-Driven Web Pages
-  Due date: Nov 18 2016
+  Project Name: Database-Driven Web Pages
+  Due date: Nov 20 2016
 -->
+<?php
+  $HOSTNAME = 'localhost';
+  $DATABASE = 'wdm_project3';
+  $USERNAME = 'root';
+  $PASSWORD = '';
+
+  $IMGSRC_ARTISTS_MEDIUM = './images/art/artists/medium/';
+  $IMGSRC_WORKS_SQR_MEDIUM = './images/art/works/square-medium/';
+  $IMG_FORMAT = '.jpg';
+ ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -33,8 +44,8 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Pages <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="Part01_ArtistsDataList.php">Artists Data List (Part 1)</a></li>
-                <li class="active"><a href="Part02_SingleArtist.php?id=1">Single Artist (Part 2)</a></li>
-                <li><a href="Part03_SingleWork.php?id=1">Single Work (Part 3)</a></li>
+                <li class="active"><a href="Part02_SingleArtist.php?id=19">Single Artist (Part 2)</a></li>
+                <li><a href="Part03_SingleWork.php?id=394">Single Work (Part 3)</a></li>
                 <li><a href="Part04_Search.php">Search (Part 4)</a></li>
               </ul>
             </li>
@@ -60,84 +71,95 @@
         if($_SERVER['REQUEST_METHOD'] == "GET"){
           if(isset($_GET['id'])){
             $artistId = $_GET['id'];
-            $db = new mysqli('localhost','root','','wdm_project3');
+            $db = new mysqli($HOSTNAME, $USERNAME, $PASSWORD, $DATABASE);
             $db->query("SET NAMES 'utf8'");
             $sql = "SELECT *  FROM artists WHERE artistid=".$artistId;
-
             $result =  $db->query($sql);
-            $row = $result->fetch_assoc();
-            header('Content-type: text/html; charset=utf-8');
 
-            if(count($row) > 0){
-              $artistName = $row['FirstName'].' '.$row['LastName'];
-              echo '<h2 style="margin-left:12px;">'.$artistName.'</h2>';
-              echo '<div class="container">';
-                echo '<div class="row">';
-
-                  echo '<div class="col-md-4">';
-                    echo '<img src="./images/art/artists/medium/'.$row['ArtistID'].'.jpg" />';
-                  echo '</div>'; // col-md-4
-
-                  echo '<div class="col-md-5">';
-                    echo '<p class="description"> '.$row['Details'].'</p>';
-                    echo '<button type="button" style="color:#428bca" class="btn btn-default">&hearts; Add to Favorites List</button>';
-                    echo '<table class="table table-hover table-bordered artistTable">';
-                      echo '<thead>';
-                        echo '<tr>';
-                          echo '<th style="height:45px;" class="active" colspan="2"> Artist Details </th>';
-                        echo '</tr>';
-                      echo '</thead>';
-                      echo '<tbody>';
-                        echo '<tr>';
-                          echo '<th> Date : </th>';
-                          echo '<td> '.$row['YearOfBirth'].' - '.$row['YearOfDeath'].' </td>';
-                        echo '</tr>';
-                        echo '<tr>';
-                          echo '<th> Nationality : </th>';
-                          echo '<td> '.$row['Nationality'].' </td>';
-                        echo '</tr>';
-                        echo '<tr>';
-                          echo '<th> More Info : </th>';
-                          echo '<td> <a target="_blank" href='.$row['ArtistLink'].'>'.$row['ArtistLink'].'</a></td>';
-                        echo '</tr>';
-                      echo '</tbody>';
-                    echo '</table>'; // Table
-                  echo '</div>'; // col-md-6
-
-                echo '</div>'; // rows
-              echo '</div>';
-              $result->close();
-
-              $sql = "SELECT * FROM artworks WHERE artistid=".$artistId;
-              $result =  $db->query($sql);
-
-              echo '<div class="container">';
-                echo '<h3> Art by '.$artistName.' </h3>';
-                echo '<div class="row">';
-                while($row = $result->fetch_assoc()) {
-                  echo '<div class="text-center col-md-4 topBox">';
-                      echo '<div class="thumbnail center-block" style="width:142px">';
-                        echo '<a href="Part03_SingleWork.php?id='.$row['ArtWorkID'].'" >';
-                          echo '<img src="./images/art/works/square-medium/'.$row['ImageFileName'].'.jpg" class="img-handle">';
-                        echo '</a>';
-                      echo '</div>';
-                      echo '<div class="linkBox"><a href="Part03_SingleWork.php?id='.$row['ArtWorkID'].'" >'.$row['Title'].', '.$row['YearOfWork'].'</a></div>';
-                      echo '<div class="buttonBox">';
-                        echo '<button type="button" onclick="location.href=\'Part03_SingleWork.php?id='.$row['ArtWorkID'].'\'" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-info-sign white"></span> View</button>';
-                        echo '<button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-gift white"></span> Wish</button>';
-                        echo '<button type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-shopping-cart icon-flipped white"></span> Cart</button>';
-                      echo '</div>';
-                  echo '</div>';
-                }
-                echo '</div>';
-              echo '</div>';
-              $result->close();
-              $db->close();
-            } else {
+            if(!$result){
+              header('Content-type: text/html; charset=utf-8');
               if (headers_sent() === false)
               {
                   header('Location: Error.php');
+                  $result->close();
+                  $db->close();
                   die();
+              }
+            } else{
+              $row = $result->fetch_assoc();
+              header('Content-type: text/html; charset=utf-8');
+
+              if(count($row) > 0){
+                $artistName = $row['FirstName'].' '.$row['LastName'];
+                echo '<h2 style="margin-left:12px;">'.$artistName.'</h2>';
+                echo '<div class="container">';
+                  echo '<div class="row">';
+
+                    echo '<div class="col-md-4">';
+                      echo '<img src="'.$IMGSRC_ARTISTS_MEDIUM.$row['ArtistID'].$IMG_FORMAT.'" />';
+                    echo '</div>'; // col-md-4
+
+                    echo '<div class="col-md-5">';
+                      echo '<p class="description"> '.$row['Details'].'</p>';
+                      echo '<button type="button" style="color:#428bca" class="btn btn-default">&hearts; Add to Favorites List</button>';
+                      echo '<table class="table table-hover table-bordered artistTable">';
+                        echo '<thead>';
+                          echo '<tr>';
+                            echo '<th style="height:45px;" class="active" colspan="2"> Artist Details </th>';
+                          echo '</tr>';
+                        echo '</thead>';
+                        echo '<tbody>';
+                          echo '<tr>';
+                            echo '<th> Date : </th>';
+                            echo '<td> '.$row['YearOfBirth'].' - '.$row['YearOfDeath'].' </td>';
+                          echo '</tr>';
+                          echo '<tr>';
+                            echo '<th> Nationality : </th>';
+                            echo '<td> '.$row['Nationality'].' </td>';
+                          echo '</tr>';
+                          echo '<tr>';
+                            echo '<th> More Info : </th>';
+                            echo '<td> <a target="_blank" href='.$row['ArtistLink'].'>'.$row['ArtistLink'].'</a></td>';
+                          echo '</tr>';
+                        echo '</tbody>';
+                      echo '</table>'; // Table
+                    echo '</div>'; // col-md-6
+
+                  echo '</div>'; // rows
+                echo '</div>';
+                $result->close();
+
+                $sql = "SELECT * FROM artworks WHERE artistid=".$artistId;
+                $result =  $db->query($sql);
+
+                echo '<div class="container">';
+                  echo '<h3> Art by '.$artistName.' </h3>';
+                  echo '<div class="row">';
+                  while($row = $result->fetch_assoc()) {
+                    echo '<div class="text-center col-md-4 topBox">';
+                        echo '<div class="thumbnail center-block" style="width:142px">';
+                          echo '<a href="Part03_SingleWork.php?id='.$row['ArtWorkID'].'" >';
+                            echo '<img src="'.$IMGSRC_WORKS_SQR_MEDIUM.$row['ImageFileName'].$IMG_FORMAT.'" class="img-handle">';
+                          echo '</a>';
+                        echo '</div>';
+                        echo '<div class="linkBox"><a href="Part03_SingleWork.php?id='.$row['ArtWorkID'].'" >'.$row['Title'].', '.$row['YearOfWork'].'</a></div>';
+                        echo '<div class="buttonBox">';
+                          echo '<button type="button" onclick="location.href=\'Part03_SingleWork.php?id='.$row['ArtWorkID'].'\'" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-info-sign white"></span> View</button>';
+                          echo '<button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-gift white"></span> Wish</button>';
+                          echo '<button type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-shopping-cart icon-flipped white"></span> Cart</button>';
+                        echo '</div>';
+                    echo '</div>';
+                  }
+                  echo '</div>';
+                echo '</div>';
+                $result->close();
+                $db->close();
+              } else {
+                if (headers_sent() === false)
+                {
+                    header('Location: Error.php');
+                    die();
+                }
               }
             }
           } else {
