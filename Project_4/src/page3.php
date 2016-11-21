@@ -34,6 +34,56 @@
       ';
     die();
   }
+
+  if(isset($_POST['basketAction'])){
+    $username = $_SESSION['username'];
+
+    $dbh = new PDO($CONNECTION_STRING, $USERNAME, $PASSWORD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+
+    $w_sql = 'SELECT basketID FROM shoppingbasket WHERE username = "'.$username.'"';
+    $stmt = $dbh->prepare($w_sql);
+
+    if($stmt->execute()){
+      if($stmt->rowCount() > 0){
+        $row = $stmt->fetch(); 
+        $basketID = $row['basketID'];
+
+        $w_sql = 'SELECT ISBN, number FROM contains WHERE basketID="'.$basketID.'"';
+        $stmt = $dbh->prepare($w_sql);
+
+        if($stmt->execute()){
+          
+          // For every ISBN update Warehouse and add Shipping order
+          while($row = $stmt->fetch()){
+            $isbn = $row['ISBN'];
+            $number = $row['number'];
+
+            // Update warehouse stock
+            $w_sql = 'SELECT warehouseCode FROM stocks WHERE number = (SELECT MAX(number) FROM stocks WHERE ISBN = "'.$isbn.'")';
+
+            $w_stmt = $dbh->prepare($w_sql);
+            $w_stmt->execute();
+            $w_row = $w_stmt->fetch();
+
+            if($w_row['warehouseCode'] != ''){
+              $warehouseCode = $w_row['warehouseCode'];
+              $dbh->beginTransaction();
+              $dbh->exec('UPDATE stocks SET number = number - '.$number.' WHERE  ISBN ="'.$isbn.'" AND warehouseCode='.$warehouseCode);
+              $dbh->exec('INSERT INTO shippingorder VALUES("'.$isbn.'", '.$warehouseCode.', "'.$username.'",'.$number.')');
+              $dbh->commit();
+            }
+          } // while
+
+          //Remove basket
+          $dbh->beginTransaction();
+          $dbh->exec('DELETE FROM shoppingbasket WHERE username="'.$username.'"');
+          $dbh->exec('DELETE FROM contains WHERE basketID="'.$basketID.'"');
+          $dbh->commit();
+
+        } // if stmt->execute() ISBN
+      } // if stmt->rowCount() ISBN
+    } // if stmt->execute() BasketID
+  } // if basketAction set
  ?>
 <!DOCTYPE html>
 <html>
@@ -50,6 +100,8 @@
         </div>
       </div>
       <div id="container">
+      <div id="shoppingBasketList">
+      <h2 class="center-text">Your Shopping Basket</h2>
         <?php
           $username = $_SESSION['username'];
 
@@ -65,10 +117,8 @@
 
             if($totalItems > 0){
 
-              echo
-                '<div id="shoppingBasketList">
-                  <h2 style="text-align:center">Your Shopping Basket</h2>
-                  <h3>Total Items: '.$totalItems.'</h3>
+              echo 
+                 '<h3>Total Items: '.$totalItems.'</h3>
                   <table id="shoppingbasketTable" cellspacing="10">
                     <thead>
                       <tr>
@@ -96,23 +146,40 @@
               echo
                     '</tbody>
                   </table>
-
-
-                  <div id="buyBtnDiv"><div class="buyButton">Back</div><div class="buyButton">Buy</div></div>
-                </div>';
+                  <div id="btnDiv">
+                    <div id="backButton" class="actionButton">Back</div>
+                    <div id="buyButton" class="actionButton">Buy</div>
+                  </div>
+                  <form id="buyBooksForm" action="page3.php" method="post">
+                    <input type="hidden" name="basketAction" value="buyBasket" />
+                  </form>';
 
               $dbh = null;
             } else {
-              // Empty basket
-              echo '<h3>Your Shopping is empty. Select your books <a href="page2.php">here</a></h3>';
-            } 
+              
+              if(isset($_POST['basketAction']))
+                echo '<h3 class="center-text">Order placed. Thank you for shopping with us. Shop more <a href="page2.php">here</a></h3>';
+              else
+                echo '<h3 class="center-text">Your Basket is empty. Select your books <a href="page2.php">here</a></h3>';
+            }
           }
         ?>
+      </div>
       </div>
       <div id="footer"></div>
     </div>
   </body>
   <script type="text/javascript">
-    document.getElementById('logo').onclick = function(){location.href='page2.php';};
+    document.getElementById('logo').onclick = function(){
+      location.href='page2.php';
+    };
+
+    document.getElementById('backButton').onclick = function(){
+      location.href='page2.php';
+    };
+
+    document.getElementById('buyButton').onclick = function(){
+      document.getElementById('buyBooksForm').submit();
+    };
   </script>
 </html>

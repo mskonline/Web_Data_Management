@@ -47,6 +47,15 @@ body {
 	cursor: pointer;
 }
 
+.center-text{
+	text-align:center
+}
+
+/* Page1.php */
+#errorMessageDiv{
+	color: red;
+}
+
 /* Page2.php */
 
 #searchText{
@@ -158,12 +167,12 @@ body {
 	text-align: left;
 }
 
-#buyBtnDiv{
-	margin: auto;
-    width: 36%;
-    margin-top: 20px;
+#btnDiv{
+	float: right;
+	margin-top: 20px;
 }
-.buyButton {
+
+.actionButton {
 	display: inline-block;
 	color: #FFF;
     text-align: center;

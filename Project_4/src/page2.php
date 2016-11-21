@@ -20,37 +20,22 @@
   session_start();
 
   if(!isset($_SESSION['username'])){
-   if(isset($_POST['username']) && isset($_POST['password'])){
+   echo '
+        <h1>Error: No user session available</h1>
+        <h3>Redirecting to login page in <span id="ctx">8</span> seconds...</h3>
+        <script>
+          var counter = 7;
+          function countdown(){
+            var elem = document.getElementById("ctx");
+            elem.innerHTML = counter--;
 
-     $username = $_POST['username'];
-
-     try {
-       $dbh = new PDO($CONNECTION_STRING, $USERNAME, $PASSWORD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-
-       $stmt = $dbh->prepare('SELECT password FROM customer WHERE username = :usrname');
-       $stmt->bindParam(':usrname', $username);
-
-       if($stmt->execute()){
-
-         $row = $stmt->fetch();
-
-         if($row['password'] == md5($_POST['password']))
-          $validUser = true;
-
-         if($validUser){
-           $_SESSION['username'] = $username;
-         } else {
-           header('Location:page1.php');
-           die();
-         }
-       }
-     } catch (Exception $e) {
-
-     }
-   } else {
-     header('Location:page1.php');
-     die();
-   }
+            if(counter == 0)
+              location.href = "page1.php";
+          }
+          setInterval(countdown, 1000);
+        </script>
+      ';
+    die();
   } else {
    // User already has a session
    $username = $_SESSION['username'];
@@ -126,19 +111,6 @@
             $dbh->exec('INSERT into contains values("'.$isbn.'","'.$basketID.'",1)');
             $dbh->commit();
           }
-        }
-
-        // Update warehouse stock
-        $b_sql = 'SELECT warehouseCode FROM stocks WHERE number = (SELECT MAX(number) FROM stocks WHERE ISBN = "'.$isbn.'")';
-
-        $stmt = $dbh->prepare($b_sql);
-        $stmt->execute();
-        $row = $stmt->fetch();
-
-        if($row['warehouseCode'] != ''){
-          $dbh->beginTransaction();
-          $dbh->exec('UPDATE stocks SET number = number - 1 WHERE  ISBN ="'.$isbn.'" AND warehouseCode='.$row['warehouseCode']);
-          $dbh->commit();
         }
      }
    }
