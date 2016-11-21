@@ -69,7 +69,7 @@
           <p>
             What is this all about and other stuff
           </p>
-          <p><a class="btn btn-default" href="#" role="button"><span class="glyphicon glyphicon-link"></span> Visit Page </a></p>
+          <p><a class="btn btn-default" href="About.php" role="button"><span class="glyphicon glyphicon-link"></span> Visit Page </a></p>
         </div>
         <div class="col-md-3">
           <h2><span class="glyphicon glyphicon-list"></span> Artist List </h2>

@@ -44,7 +44,7 @@
                 <li><a href="Part01_ArtistsDataList.php">Artists Data List (Part 1)</a></li>
                 <li><a href="Part02_SingleArtist.php?id=19">Single Artist (Part 2)</a></li>
                 <li><a href="Part03_SingleWork.php?id=394">Single Work (Part 3)</a></li>
-                <li class="active"><a href="Part04_Search.php">Search (Part 4)</a></li>
+                <li class="active"><a href="Part04_Search.php">Advanced Search (Part 4)</a></li>
               </ul>
             </li>
           </ul>

@@ -111,6 +111,7 @@ body {
 #salesTable.table {
     border: 2px solid #d9edf7;
     border-collapse:inherit;
+    visibility: hidden;
 }
 
 .icon-flipped {
