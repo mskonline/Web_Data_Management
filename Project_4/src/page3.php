@@ -97,6 +97,12 @@
       <div id="header">
         <div id="logoContainer">
           <span id="logo">CheapBooks</span>
+          <?php
+            echo '<div id="userInfoDiv">';
+            echo '<span id="userInfo">Logged in as : '.$_SESSION['username'].'</span>';
+            echo '<input id="logoutBtn" type="button" value="Log out" />
+            </div>';
+           ?>
         </div>
       </div>
       <div id="container">
@@ -122,7 +128,7 @@
                   <table id="shoppingbasketTable" cellspacing="10">
                     <thead>
                       <tr>
-                        <th style="padding-left:10px;">Title</th>
+                        <th class="padding-left-10">Title</th>
                         <th>Publisher</th>
                         <th>ISBN</th>
                         <th style="text-align:right;padding-right:10px;">Price</th>
@@ -132,16 +138,16 @@
 
               while($row = $stmt->fetch()){
                 echo '<tr>';
-                echo '<td style="padding-left:10px;">'.$row['title'].'</td>';
+                echo '<td class="padding-left-10">'.$row['title'].'</td>';
                 echo '<td>'.$row['publisher'].'</td>';
                 echo '<td>'.$row['ISBN'].'</td>';
-                echo '<td style="text-align:right;padding-right:10px;">'.$row['price'].'</td>';
+                echo '<td style="text-align:right;padding-right:10px;"> $'.$row['price'].'</td>';
                 echo '</tr>';
 
                 $totalBasketPrice += $row['price'];
               }
 
-              echo '<tr><td style="padding-left:10px;" colspan="3">Total</td><td style="text-align:right;padding-right:10px;"> $'.$totalBasketPrice.'</td></tr>';
+              echo '<tr><td class="padding-left-10" colspan="3">Total</td><td id="totalPriceCell"> $'.$totalBasketPrice.'</td></tr>';
 
               echo
                     '</tbody>

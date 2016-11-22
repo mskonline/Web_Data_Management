@@ -39,7 +39,6 @@ body {
 	font-size: 70px;
 	color: #FFF;
 	padding: 10px;
-	/* font-family: 'Amethysta', serif; */
 }
 
 #logo {
@@ -47,23 +46,96 @@ body {
 	cursor: pointer;
 }
 
+#userInfoDiv{
+	position: absolute;
+	top: 22px;
+	right: 8px;
+}
+
+#userInfo {
+	font-size:14px;margin-right:12px;
+}
+
+#logoutBtn{
+	width: 80px;
+	height: 28px;
+	font-family:inherit; 
+	cursor:pointer;
+}
+
 .center-text{
 	text-align:center
 }
 
+.padding-left-10{
+	padding-left: 10px;
+}
+
+.padding-right-5{
+	padding-right: 5px;
+}
+
 /* Page1.php */
+
+#loginContainer{
+	text-align: center; 
+	margin-top: 130px;
+}
+
+#loginFormHeader {
+	margin: 10px;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+#loginBtnDiv {
+	margin: 30px;
+}
+
+#loginBtn {
+	width: 80px;
+	height: 30px;
+	cursor:pointer;
+}
+
+#newUserRegisterBtnDiv {
+	margin: 30px;
+}
+
+#newUserRegisterBtn {
+	width: 188px;
+	height: 30px;
+	cursor:pointer;
+}
+
 #errorMessageDiv{
+	display: none;
 	color: red;
 }
 
 /* Page2.php */
 
+#searchContainer{
+	margin-bottom: 20px;
+	margin-top: 60px; 
+	text-align: center;
+}
+
+#searchTextHeader{
+	margin-right: 20px;
+	font-size: 24px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+ 
 #searchText{
+  padding-left: 5px;
   margin-right: 15px;
+  margin-top: 25px;
   width: 500px;
   height: 35px;
   border-radius: 10px;
-  font-size: 24px;
+  font-size: 18px;
 	outline: none;
 	border: 1px solid #DDDDDD;
 	-webkit-transition: border 0.30s ease-in-out;
@@ -93,16 +165,56 @@ body {
   margin-right: 10px;
 }
 
+#shoppingBasketBtn{
+	width: 140px;
+}
+
 #bookList{
 	margin: auto;
 	width: 50%;
 }
 
 #booksTable{
+	border:1px solid;
+	border-collapse: collapse;
 	width: 100%;
+    font-size: 14px;
+    margin-top: 10px;
+    border-spacing: 0.5rem;
 }
 
 
+#booksTable tbody tr:nth-child(even){
+	background-color: white;
+}
+
+#booksTable tbody tr:nth-child(odd){
+	background-color: lightgray;
+}
+
+
+#booksTable thead tr{
+	background-color: #0b1930;
+	color:white;
+}
+
+#booksTable td{
+	height: 30px;
+}
+
+#booksTable th{
+	height: 30px;
+	text-align: left;
+}
+
+.addToBasketCol{
+	text-align: right;
+	padding-right: 5px;
+}
+
+.addToBasketBtn{
+	cursor: pointer;
+}
 /* Page3.php */
 
 #fileList{
@@ -167,6 +279,12 @@ body {
 	text-align: left;
 }
 
+#totalPriceCell {
+	color:red;
+	text-align:right;
+	padding-right:10px;
+}
+
 #btnDiv{
 	float: right;
 	margin-top: 20px;
@@ -185,4 +303,34 @@ body {
     -webkit-border-radius: 3px 17px;
     cursor: pointer;
     margin-left: 5px;
+}
+
+/* Page 4 */
+
+.containerStyle {
+	padding-top: 15px;
+}
+
+
+#registerFormHeader {
+	padding-top: 20px;
+	font-size: 20px;
+	font-weight: bold; 
+	text-align:center;
+}
+
+.register-input-div, .login-input-div {
+	margin: 10px;
+}
+
+#registerBtnDiv {
+	text-align: center; 
+	margin-bottom:25px;
+}
+
+#registerBtn {
+	width: 110px;
+	height: 30px;
+	cursor:pointer;
+	margin-top: 20px;
 }

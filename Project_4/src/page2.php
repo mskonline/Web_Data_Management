@@ -72,8 +72,8 @@
             $isbns = $isbns."'".$row['ISBN']."'";
           }
 
-          if($isbns != '')
-            $showSearchTable = true;
+          
+          $showSearchTable = true;
        } else {
          echo 'stmt execute failed';
        }
@@ -145,28 +145,26 @@
           <span id="logo">CheapBooks</span>
           <?php
             if($validUser){
-              echo
-              '<div style="position: absolute;top: 22px;right: 8px;">';
-              echo '<span style="font-size:14px;margin-right:12px;">Logged in as : '.$_SESSION['username'].'</span>';
-              echo
-      					'<input id="logoutBtn" type="button" value="Log out" style="width: 80px;height: 28px;font-family:inherit; cursor:pointer">
-      				</div>';
+              echo '<div id="userInfoDiv">';
+              echo '<span id="userInfo">Logged in as : '.$_SESSION['username'].'</span>';
+              echo '<input id="logoutBtn" type="button" value="Log out" />
+              </div>';
             }
            ?>
         </div>
       </div>
       <div id="container">
-        <div style="margin-bottom: 20px; margin-top: 60px; text-align:center">
-          <div style="margin-right: 20px;font-size:24px;font-weight:bold;margin-bottom:20px;">Search CheapBooks</div>
+        <div id="searchContainer">
+          <div id="searchTextHeader">Search CheapBooks</div>
           <span>
             <form id="searchForm" class="" action="page2.php" method="post">
               <input type="hidden" id="searchBy" name="searchBy" value="title">
               <input type="hidden" id="addToBasket" name="addToBasket" value="">
-              <input id="searchText" type="text" name="searchText" value="<?php echo $searchText;?>" style="margin-right: 15px; margin-top: 25px" />
+              <input id="searchText" type="text" name="searchText" value="<?php echo $searchText;?>" />
               <div class="searchBtns">
-                <input type="button" id="searchBtnAuthor" name="searchBtnAuthor" value="Search by Author" style="cursor:pointer">
-                <input type="button" id="searchBtnTitle" name="searchBy" value="Search by Title" style="cursor:pointer">
-                <input type="button" id="shoppingBasketBtn" data="<?php echo $basketCount ?>" value="Shopping Basket (<?php echo $basketCount ?>)" style="cursor:pointer; width: 140px;">
+                <input type="button" id="searchBtnAuthor" name="searchBtnAuthor" value="Search by Author">
+                <input type="button" id="searchBtnTitle" name="searchBy" value="Search by Title">
+                <input type="button" id="shoppingBasketBtn" data="<?php echo $basketCount ?>" value="Shopping Basket (<?php echo $basketCount ?>)">
               </div>
             </form>
           </span>
@@ -175,40 +173,46 @@
         <?php
 
           if ($showSearchTable) {
-            echo
-            '<div id="bookList">
-    					<table id="booksTable" cellspacing="10">
-                <caption> Books </caption>
-    						<thead>
-    							<tr>
-    								<td>Name</td>
-    								<td>ISBN</td>
-    								<td>Stock</td>
-                    <td></td>
-    							</tr>
-    						</thead>
-                <tbody>';
-
-            $stmt = $dbh->prepare('SELECT bk.title, bkstocks.ISBN, bkstocks.stock FROM (SELECT stks.ISBN, SUM(stks.number) as stock FROM stocks stks WHERE stks.ISBN IN ('.$isbns.') AND stks.number > 0 GROUP BY stks.ISBN) bkstocks, book bk WHERE bkstocks.ISBN = bk.ISBN');
-
-            if($stmt->execute()){
-              while($row = $stmt->fetch()){
-                echo '<tr>';
-                echo '<td>'.$row['title'].'</td>';
-                echo '<td>'.$row['ISBN'].'</td>';
-                echo '<td>'.$row['stock'].'</td>';
-                echo '<td style="text-align:right"><input type="button" class="addToBasketBtn" data="'.$row['ISBN'].'" value="Add to Basket" ></td>';
-                echo '</tr>';
-              }
-            }    
+            echo '<div id="bookList">
+                  <h2 class="center-text">Search Results</h2>';
             
-            echo
-    						'</tbody>
-    					</table>
-    				</div>';
+            if($isbns != ''){
+              echo
+                '<table id="booksTable" cellspacing="10">
+                  <thead>
+                    <tr>
+                      <td class="padding-left-10">Name</td>
+                      <td>ISBN</td>
+                      <td>Stock</td>
+                      <td></td>
+                    </tr>
+                  </thead>
+                  <tbody>';
 
-            $dbh = null;
-          }
+              $stmt = $dbh->prepare('SELECT bk.title, bkstocks.ISBN, bkstocks.stock FROM (SELECT stks.ISBN, SUM(stks.number) as stock FROM stocks stks WHERE stks.ISBN IN ('.$isbns.') AND stks.number > 0 GROUP BY stks.ISBN) bkstocks, book bk WHERE bkstocks.ISBN = bk.ISBN');
+
+              if($stmt->execute()){
+                while($row = $stmt->fetch()){
+                  echo '<tr>';
+                  echo '<td class="padding-left-10">'.$row['title'].'</td>';
+                  echo '<td>'.$row['ISBN'].'</td>';
+                  echo '<td>'.$row['stock'].'</td>';
+                  echo '<td class="addToBasketCol"><input type="button" class="addToBasketBtn" data="'.$row['ISBN'].'" value="Add to Basket" ></td>';
+                  echo '</tr>';
+                }
+              }    
+              
+              echo
+                  '</tbody>
+                </table>';
+              
+              $dbh = null;
+            } else {
+              echo '<h3 class="center-text"> No matching book(s) found.</h3>';
+            }
+            
+            echo '</div>';
+          } 
          ?>
       </div>
     </div>
