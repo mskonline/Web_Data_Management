@@ -3,7 +3,7 @@
   ID: 1001236131
   Email: saikumar.manakan@mavs.uta.edu
   Project Name: PHP Scripting with Relational Database
-  Due date: Nov 23 2016
+  Due date: Nov 26 2016
 -->
 <?php
   $HOSTNAME = 'localhost';
@@ -65,6 +65,7 @@
   			<div id="logoContainer">
   				<span id="logo">CheapBooks</span>
   			</div>
+        <div id="strip"></div>
   		</div>
   		<div id="container">
   			<div style="" id="loginContainer">

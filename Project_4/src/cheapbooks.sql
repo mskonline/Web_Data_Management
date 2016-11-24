@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 22, 2016 at 09:21 PM
+-- Generation Time: Nov 25, 2016 at 12:54 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -79,15 +79,6 @@ CREATE TABLE `contains` (
   `number` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='the content of a shopping basket';
 
---
--- Dumping data for table `contains`
---
-
-INSERT INTO `contains` (`ISBN`, `basketID`, `number`) VALUES
-('', '5833cfc22c618', 2),
-('0345391802', '5834a8b66b0c6', 1),
-('0451191153', '5834a8b66b0c6', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -107,7 +98,7 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`username`, `address`, `email`, `phone`, `password`) VALUES
-('sai', '601 Summit Ave #285', 'saikumar.manakan@gmail.com', '6825519838', '202cb962ac59075b964b07152d234b70');
+('Sai', 'Parsigutta', 'msk.mymails@gmail.com', '6825519838', '202cb962ac59075b964b07152d234b70');
 
 -- --------------------------------------------------------
 
@@ -122,27 +113,6 @@ CREATE TABLE `shippingorder` (
   `number` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `shippingorder`
---
-
-INSERT INTO `shippingorder` (`ISBN`, `warehouseCode`, `username`, `number`) VALUES
-('0451191153', 1003, 'smith', 1),
-('0451191153', 1004, 'smith', 1),
-('0451191153', 1003, 'smith', 1),
-('0451191153', 1004, 'smith', 1),
-('0451191153', 1003, 'smith', 1),
-('0451191153', 1004, 'smith', 1),
-('0451191153', 1003, 'smith', 1),
-('0451191153', 1004, 'smith', 1),
-('0345391802', 1003, 'smith', 1),
-('0451191153', 1003, 'smith', 1),
-('0553585975', 1002, 'smith', 2),
-('0345391802', 1004, 'smith', 1),
-('0553585975', 1002, 'smith', 1),
-('0345391802', 1001, 'smith', 1),
-('0553585975', 1002, 'smith', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -153,14 +123,6 @@ CREATE TABLE `shoppingbasket` (
   `basketID` varchar(100) NOT NULL,
   `username` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='relates customers with baskets';
-
---
--- Dumping data for table `shoppingbasket`
---
-
-INSERT INTO `shoppingbasket` (`basketID`, `username`) VALUES
-('5833cfc22c618', 'smith'),
-('5834a8b66b0c6', 'sai');
 
 -- --------------------------------------------------------
 
@@ -183,12 +145,12 @@ INSERT INTO `stocks` (`ISBN`, `warehouseCode`, `number`) VALUES
 ('0451191153', 1001, 25),
 ('0451524934', 1001, 10),
 ('0553585975', 1001, 15),
-('0345391802', 1002, 4),
+('0345391802', 1002, 3),
 ('0451191153', 1002, 25),
 ('0451524934', 1002, 15),
 ('0553585975', 1002, 65),
 ('0345391802', 1003, 4),
-('0451191153', 1003, 44),
+('0451191153', 1003, 43),
 ('0451524934', 1003, 100),
 ('0553585975', 1003, 45),
 ('0345391802', 1004, 4),
@@ -257,16 +219,39 @@ ALTER TABLE `book`
   ADD PRIMARY KEY (`ISBN`);
 
 --
+-- Indexes for table `contains`
+--
+ALTER TABLE `contains`
+  ADD KEY `ISBN` (`ISBN`),
+  ADD KEY `basketID` (`basketID`);
+
+--
 -- Indexes for table `customer`
 --
 ALTER TABLE `customer`
   ADD PRIMARY KEY (`username`);
 
 --
+-- Indexes for table `shippingorder`
+--
+ALTER TABLE `shippingorder`
+  ADD KEY `ISBN` (`ISBN`),
+  ADD KEY `warehouseCode` (`warehouseCode`),
+  ADD KEY `username` (`username`);
+
+--
 -- Indexes for table `shoppingbasket`
 --
 ALTER TABLE `shoppingbasket`
-  ADD PRIMARY KEY (`basketID`);
+  ADD PRIMARY KEY (`basketID`),
+  ADD KEY `username` (`username`);
+
+--
+-- Indexes for table `stocks`
+--
+ALTER TABLE `stocks`
+  ADD KEY `ISBN` (`ISBN`),
+  ADD KEY `warehouseCode` (`warehouseCode`);
 
 --
 -- Indexes for table `warehouse`
@@ -278,7 +263,47 @@ ALTER TABLE `warehouse`
 -- Indexes for table `writtenby`
 --
 ALTER TABLE `writtenby`
-  ADD PRIMARY KEY (`ssn`,`ISBN`);
+  ADD KEY `ssn` (`ssn`),
+  ADD KEY `ISBN` (`ISBN`);
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `contains`
+--
+ALTER TABLE `contains`
+  ADD CONSTRAINT `contains_ibfk_1` FOREIGN KEY (`ISBN`) REFERENCES `book` (`ISBN`),
+  ADD CONSTRAINT `contains_ibfk_2` FOREIGN KEY (`basketID`) REFERENCES `shoppingbasket` (`basketID`);
+
+--
+-- Constraints for table `shippingorder`
+--
+ALTER TABLE `shippingorder`
+  ADD CONSTRAINT `shippingorder_ibfk_1` FOREIGN KEY (`ISBN`) REFERENCES `book` (`ISBN`),
+  ADD CONSTRAINT `shippingorder_ibfk_2` FOREIGN KEY (`warehouseCode`) REFERENCES `warehouse` (`warehouseCode`),
+  ADD CONSTRAINT `shippingorder_ibfk_3` FOREIGN KEY (`username`) REFERENCES `customer` (`username`);
+
+--
+-- Constraints for table `shoppingbasket`
+--
+ALTER TABLE `shoppingbasket`
+  ADD CONSTRAINT `shoppingbasket_ibfk_1` FOREIGN KEY (`username`) REFERENCES `customer` (`username`);
+
+--
+-- Constraints for table `stocks`
+--
+ALTER TABLE `stocks`
+  ADD CONSTRAINT `stocks_ibfk_1` FOREIGN KEY (`ISBN`) REFERENCES `book` (`ISBN`),
+  ADD CONSTRAINT `stocks_ibfk_2` FOREIGN KEY (`warehouseCode`) REFERENCES `warehouse` (`warehouseCode`);
+
+--
+-- Constraints for table `writtenby`
+--
+ALTER TABLE `writtenby`
+  ADD CONSTRAINT `writtenby_ibfk_1` FOREIGN KEY (`ssn`) REFERENCES `author` (`ssn`),
+  ADD CONSTRAINT `writtenby_ibfk_2` FOREIGN KEY (`ISBN`) REFERENCES `book` (`ISBN`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

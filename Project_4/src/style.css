@@ -3,7 +3,7 @@
   ID: 1001236131
   Email: saikumar.manakan@mavs.uta.edu
   Project Name: PHP Scripting with Relational Database
-  Due date: Nov 23 2016
+  Due date: Nov 26 2016
 */
 
 @CHARSET "ISO-8859-1";
@@ -27,10 +27,19 @@ body {
 #header {
 	height: 26%;
 	width: 100%;
+	background: #172029;
+	background: -moz-linear-gradient(top, #172029 0%, #093b73 100%);
+	background: -webkit-linear-gradient(top, #172029 0%, #093b73 100%);
+	background: linear-gradient(to bottom, #172029 0%, #093b73 100%);
+
+	/*
+
 	background: #499bea;
 	background: -moz-linear-gradient(top, #499bea 0%, #207ce5 100%);
 	background: -webkit-linear-gradient(top, #499bea 0%, #207ce5 100%);
 	background: linear-gradient(to bottom, #499bea 0%, #207ce5 100%);
+
+	*/
 }
 
 #logoContainer {
@@ -52,15 +61,24 @@ body {
 	right: 8px;
 }
 
+#loggedInAsDiv{
+	height: 30px;
+    text-align: right;
+}
+
 #userInfo {
 	font-size:14px;margin-right:12px;
 }
 
 #logoutBtn{
 	width: 80px;
-	height: 28px;
-	font-family:inherit; 
+	height: 30px;
 	cursor:pointer;
+}
+
+#strip{
+	height: 5px;
+	background: #f7c376;
 }
 
 .center-text{

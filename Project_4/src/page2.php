@@ -3,7 +3,7 @@
   ID: 1001236131
   Email: saikumar.manakan@mavs.uta.edu
   Project Name: PHP Scripting with Relational Database
-  Due date: Nov 23 2016
+  Due date: Nov 26 2016
 -->
 <?php
   $HOSTNAME = 'localhost';
@@ -116,7 +116,6 @@
    }
   }
 
-  //print_r($_POST);
   $basketCount = '0';
   $sql = "SELECT COUNT(ISBN) bCount FROM  contains WHERE basketID = (SELECT basketID FROM shoppingbasket WHERE username='".$_SESSION['username']."')";
   
@@ -147,11 +146,13 @@
             if($validUser){
               echo '<div id="userInfoDiv">';
               echo '<span id="userInfo">Logged in as : '.$_SESSION['username'].'</span>';
-              echo '<input id="logoutBtn" type="button" value="Log out" />
+              echo '<input type="button" id="shoppingBasketBtn" data="'.$basketCount.'" value="Shopping Basket ('.$basketCount.')" />';
+              echo '<input id="logoutBtn" type="button" value="Log Out" />
               </div>';
             }
            ?>
         </div>
+        <div id="strip"></div>
       </div>
       <div id="container">
         <div id="searchContainer">
@@ -164,7 +165,7 @@
               <div class="searchBtns">
                 <input type="button" id="searchBtnAuthor" name="searchBtnAuthor" value="Search by Author">
                 <input type="button" id="searchBtnTitle" name="searchBy" value="Search by Title">
-                <input type="button" id="shoppingBasketBtn" data="<?php echo $basketCount ?>" value="Shopping Basket (<?php echo $basketCount ?>)">
+                
               </div>
             </form>
           </span>
