@@ -188,5 +188,9 @@
     document.getElementById('buyButton').onclick = function(){
       document.getElementById('buyBooksForm').submit();
     };
+
+    document.getElementById('logoutBtn').onclick = function(){
+      location.href='page1.php';
+    };
   </script>
 </html>
