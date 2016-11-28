@@ -55,7 +55,7 @@
          $stmt = $dbh->prepare("SELECT ISBN FROM book WHERE title LIKE :booktitle");
          $stmt->bindParam(':booktitle', $searchTextQStr);
        } else {
-         $stmt = $dbh->prepare("SELECT ISBN FROM book WHERE ISBN = (SELECT ISBN FROM writtenby WHERE ssn = (SELECT ssn FROM author WHERE name LIKE :authorname))");
+         $stmt = $dbh->prepare("SELECT ISBN FROM book WHERE ISBN IN (SELECT ISBN FROM writtenby WHERE ssn = (SELECT ssn FROM author WHERE name LIKE :authorname))");
          $stmt->bindParam(':authorname', $searchTextQStr);
        }
 
@@ -159,13 +159,12 @@
           <div id="searchTextHeader">Search CheapBooks</div>
           <span>
             <form id="searchForm" class="" action="page2.php" method="post">
-              <input type="hidden" id="searchBy" name="searchBy" value="title">
+              <input type="hidden" id="searchBy" name="searchBy" value="">
               <input type="hidden" id="addToBasket" name="addToBasket" value="">
               <input id="searchText" type="text" name="searchText" value="<?php echo $searchText;?>" />
               <div class="searchBtns">
                 <input type="button" id="searchBtnAuthor" name="searchBtnAuthor" value="Search by Author">
-                <input type="button" id="searchBtnTitle" name="searchBy" value="Search by Title">
-                
+                <input type="button" id="searchBtnTitle" name="searchBy" value="Search by Title">     
               </div>
             </form>
           </span>
@@ -182,7 +181,7 @@
                 '<table id="booksTable" cellspacing="10">
                   <thead>
                     <tr>
-                      <td class="padding-left-10">Name</td>
+                      <td class="padding-left-10">Book Name</td>
                       <td>ISBN</td>
                       <td>Stock</td>
                       <td></td>

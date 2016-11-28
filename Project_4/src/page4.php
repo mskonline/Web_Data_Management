@@ -92,7 +92,7 @@
 
         <?php 
           if($userSaved){
-            echo 'alert("User saved successfully.");';
+            echo 'setTimeout(function(){alert("User saved successfully. Redirecting to Login page..."); location.href="customer.php"; }, 500);';
           }
         ?>
 

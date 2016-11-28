@@ -76,8 +76,8 @@
 
           //Remove basket
           $dbh->beginTransaction();
-          $dbh->exec('DELETE FROM shoppingbasket WHERE username="'.$username.'"');
           $dbh->exec('DELETE FROM contains WHERE basketID="'.$basketID.'"');
+          $dbh->exec('DELETE FROM shoppingbasket WHERE username="'.$username.'"');
           $dbh->commit();
 
         } // if stmt->execute() ISBN
@@ -129,7 +129,7 @@
                   <table id="shoppingbasketTable" cellspacing="10">
                     <thead>
                       <tr>
-                        <th class="padding-left-10">Title</th>
+                        <th class="padding-left-10">Book Title</th>
                         <th>Publisher</th>
                         <th>ISBN</th>
                         <th style="text-align:right;padding-right:10px;">Price</th>
