@@ -3,7 +3,7 @@
   ID: 1001236131
   Email: saikumar.manakan@mavs.uta.edu
   Project Name: PHP Scripting with Relational Database
-  Due date: Nov 26 2016
+  Due date: Nov 30 2016
 -->
 <?php
   $HOSTNAME = 'localhost';
@@ -113,7 +113,8 @@
           $username = $_SESSION['username'];
 
           $dbh = new PDO($CONNECTION_STRING, $USERNAME, $PASSWORD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-          $sql = 'SELECT * FROM book WHERE ISBN IN (SELECT ISBN FROM contains WHERE basketID = (SELECT basketID FROM shoppingbasket WHERE username="'.$username.'"))';
+
+          $sql = 'SELECT * FROM (SELECT ISBN, title, price, publisher FROM book) AS bks JOIN (SELECT ISBN, number FROM contains WHERE basketID = (SELECT basketID FROM shoppingbasket WHERE username="'.$username.'")) bk_contains ON bks.ISBN = bk_contains.ISBN';
 
           $stmt = $dbh->prepare($sql);
 
@@ -132,23 +133,26 @@
                         <th class="padding-left-10">Book Title</th>
                         <th>Publisher</th>
                         <th>ISBN</th>
+                        <th>Quantity</th>
                         <th style="text-align:right;padding-right:10px;">Price</th>
                       </tr>
                     </thead>
                     <tbody>';
 
               while($row = $stmt->fetch()){
+                $bookPrice = $row['price'] * $row['number'];
                 echo '<tr>';
                 echo '<td class="padding-left-10">'.$row['title'].'</td>';
                 echo '<td>'.$row['publisher'].'</td>';
                 echo '<td>'.$row['ISBN'].'</td>';
-                echo '<td style="text-align:right;padding-right:10px;"> $'.$row['price'].'</td>';
+                echo '<td>'.$row['number'].'</td>';
+                echo '<td style="text-align:right;padding-right:10px;"> $'.$bookPrice.'</td>';
                 echo '</tr>';
 
-                $totalBasketPrice += $row['price'];
+                $totalBasketPrice += $bookPrice;
               }
 
-              echo '<tr><td class="padding-left-10" colspan="3">Total</td><td id="totalPriceCell"> $'.$totalBasketPrice.'</td></tr>';
+              echo '<tr><td class="padding-left-10" colspan="4">Total</td><td id="totalPriceCell"> $'.$totalBasketPrice.'</td></tr>';
 
               echo
                     '</tbody>
@@ -163,7 +167,6 @@
 
               $dbh = null;
             } else {
-              
               if(isset($_POST['basketAction']))
                 echo '<h3 class="center-text">Order placed. Thank you for shopping with us. Shop more <a href="page2.php">here</a></h3>';
               else

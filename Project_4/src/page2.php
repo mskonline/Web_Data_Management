@@ -3,7 +3,7 @@
   ID: 1001236131
   Email: saikumar.manakan@mavs.uta.edu
   Project Name: PHP Scripting with Relational Database
-  Due date: Nov 26 2016
+  Due date: Nov 30 2016
 -->
 <?php
   $HOSTNAME = 'localhost';
