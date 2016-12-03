@@ -22,6 +22,9 @@ class Dbmanager extends CI_MODEL {
         $sql = 'SELECT password FROM customer WHERE username = ?';
         $result = $db->query($sql, array($username));
 
+        if($result->num_rows() == 0)
+            return false;
+        
         $row = $result->row();
 
         if($row->password == $password){
