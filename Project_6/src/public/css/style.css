@@ -1,0 +1,345 @@
+/*
+  Student Name:  Manakan, Sai Kumar
+  ID: 1001236131
+  Email: saikumar.manakan@mavs.uta.edu
+  Project Name: PHP Scripting with Relational Database with Laravel
+  Due date: Dec 5 2016
+*/
+
+@CHARSET "ISO-8859-1";
+
+html {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana,
+		sans-serif !important;
+	font-size: 12px;
+	font-weight: normal !important;
+	height: 100%;
+	min-height: 100%;
+	background-color:#E0E0E0
+}
+
+#header {
+	height: 26%;
+	width: 100%;
+	background: #172029;
+	background: -moz-linear-gradient(top, #172029 0%, #093b73 100%);
+	background: -webkit-linear-gradient(top, #172029 0%, #093b73 100%);
+	background: linear-gradient(to bottom, #172029 0%, #093b73 100%);
+}
+
+#logoContainer {
+	margin-left: 16px;
+	height: 73%;
+	font-size: 70px;
+	color: #FFF;
+	padding: 10px;
+}
+
+#logo {
+	text-shadow: 1px 1px grey;
+	cursor: pointer;
+}
+
+#userInfoDiv{
+	position: absolute;
+	top: 22px;
+	right: 8px;
+}
+
+#loggedInAsDiv{
+	height: 30px;
+    text-align: right;
+}
+
+#userInfo {
+	font-size:14px;margin-right:12px;
+}
+
+#logoutBtn{
+	width: 80px;
+	height: 30px;
+	cursor:pointer;
+}
+
+#strip{
+	height: 5px;
+	background: #f7c376;
+}
+
+.center-text{
+	text-align:center
+}
+
+.padding-left-10{
+	padding-left: 10px;
+}
+
+.padding-right-5{
+	padding-right: 5px;
+}
+
+/* Page1.php */
+
+#loginContainer{
+	text-align: center; 
+	margin-top: 130px;
+}
+
+#loginFormHeader {
+	margin: 10px;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+#loginBtnDiv {
+	margin: 30px;
+}
+
+#loginBtn {
+	width: 80px;
+	height: 30px;
+	cursor:pointer;
+}
+
+#newUserRegisterBtnDiv {
+	margin: 30px;
+}
+
+#newUserRegisterBtn {
+	width: 188px;
+	height: 30px;
+	cursor:pointer;
+}
+
+#errorMessageDiv{
+	display: none;
+	color: red;
+}
+
+/* Page2.php */
+
+#searchContainer{
+	margin-bottom: 20px;
+	margin-top: 60px; 
+	text-align: center;
+}
+
+#searchTextHeader{
+	margin-right: 20px;
+	font-size: 24px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+ 
+#searchText{
+  padding-left: 5px;
+  margin-right: 15px;
+  margin-top: 25px;
+  width: 500px;
+  height: 35px;
+  border-radius: 10px;
+  font-size: 18px;
+	outline: none;
+	border: 1px solid #DDDDDD;
+	-webkit-transition: border 0.30s ease-in-out;
+	-moz-transition: border 0.30s ease-in-out;
+	-ms-transition: border 0.30s ease-in-out;
+	-o-transition: border 0.30s ease-in-out;
+}
+
+#searchText:focus{
+	box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+	margin-right: 15px;
+	border: 1px solid rgba(81, 203, 238, 1);
+	-webkit-transition: all 0.30s ease-in-out;
+	-moz-transition: all 0.30s ease-in-out;
+	-ms-transition: all 0.30s ease-in-out;
+	-o-transition: all 0.30s ease-in-out;
+}
+
+.searchBtns{
+  margin-top: 20px;
+}
+
+#searchBtnAuthor, #searchBtnTitle, #shoppingBasketBtn{
+  cursor: pointer;
+  width: 130px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+#shoppingBasketBtn{
+	width: 140px;
+}
+
+#bookList{
+	margin: auto;
+	width: 50%;
+}
+
+#booksTable{
+	border:1px solid;
+	border-collapse: collapse;
+	width: 100%;
+    font-size: 14px;
+    margin-top: 10px;
+    border-spacing: 0.5rem;
+}
+
+
+#booksTable tbody tr:nth-child(even){
+	background-color: white;
+}
+
+#booksTable tbody tr:nth-child(odd){
+	background-color: lightgray;
+}
+
+
+#booksTable thead tr{
+	background-color: #0b1930;
+	color:white;
+}
+
+#booksTable td{
+	height: 30px;
+}
+
+#booksTable th{
+	height: 30px;
+	text-align: left;
+}
+
+.addToBasketCol{
+	text-align: right;
+	padding-right: 5px;
+}
+
+.addToBasketBtn{
+	cursor: pointer;
+}
+/* Page3.php */
+
+#fileList{
+	margin: 20px;
+}
+
+/* Page4.php */
+
+#registerContainer{
+	margin: auto;
+	width: 40%;
+	background-color: #FFF;
+	height: 100%;
+	min-height: 500px;
+	border-radius: 5px;
+	box-shadow: 5px 5px 5px #888888;
+}
+
+.rInput{
+	width: 99%;
+}
+
+/* Page 3 */
+
+#shoppingBasketList{
+	margin: auto;
+	width: 50%;
+	margin-top: 40px;
+}
+
+#shoppingbasketTable{
+	border:1px solid;
+	border-collapse: collapse;
+	width: 100%;
+    font-size: 14px;
+    margin-top: 10px;
+    border-spacing: 0.5rem;
+}
+
+
+#shoppingbasketTable tbody tr:nth-child(even){
+	background-color: white;
+}
+
+#shoppingbasketTable tbody tr:nth-child(odd){
+	background-color: lightgray;
+}
+
+
+#shoppingbasketTable thead tr{
+	background-color: #0b1930;
+	color:white;
+}
+
+
+#shoppingbasketTable td{
+	height: 30px;
+}
+
+#shoppingbasketTable th{
+	height: 30px;
+	text-align: left;
+}
+
+#totalPriceCell {
+	color:red;
+	text-align:right;
+	padding-right:10px;
+}
+
+#btnDiv{
+	float: right;
+	margin-top: 20px;
+}
+
+.actionButton {
+	display: inline-block;
+	color: #FFF;
+    text-align: center;
+    height: 25px;
+    width: 110px;
+    font-size: 14px;
+    background-color: #2E6CD8;
+    padding: 5px 0px 0px 0px;
+    -moz-border-radius: 10px 8px;
+    -webkit-border-radius: 3px 17px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+/* Page 4 */
+
+.containerStyle {
+	padding-top: 15px;
+}
+
+
+#registerFormHeader {
+	padding-top: 20px;
+	font-size: 20px;
+	font-weight: bold; 
+	text-align:center;
+}
+
+.register-input-div, .login-input-div {
+	margin: 10px;
+}
+
+#registerBtnDiv {
+	text-align: center; 
+	margin-bottom:25px;
+}
+
+#registerBtn {
+	width: 110px;
+	height: 30px;
+	cursor:pointer;
+	margin-top: 20px;
+}
