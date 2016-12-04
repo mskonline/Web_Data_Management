@@ -28,7 +28,7 @@ class Page4 extends Controller
             $phone = $_POST['phone'];
             $password = $_POST['password'];
 
-            $userSaved = $thissaveUser($username, $email, $addr, $phone, $password);
+            $userSaved = $this->saveUser($username, $email, $addr, $phone, $password);
         }
 
         $data['userSaved'] = $userSaved;
