@@ -11,6 +11,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
+use App\Customers;
 use App\Http\Controllers\Controller;
 
 class Page1 extends Controller
@@ -23,7 +25,9 @@ class Page1 extends Controller
 		if(isset($_POST['username'])){
 			$username = $_POST['username'];
             $password = $_POST['password'];
-            $validUser = $this->checkUser($username, $password);
+			
+			$customers = new Customers();
+            $validUser = $customers->isValidCustomer($username, $password);
 
             if($validUser == true){
 				$request->session()->put('username', $username);
@@ -37,21 +41,5 @@ class Page1 extends Controller
 			$data['validUser'] = $validUser;
 			return view('page1', $data);
 		}
-    }
-	
-	private function checkUser($username, $password){
-        $password = md5($password);
-        $result = DB::select('SELECT password FROM customer WHERE username = ?', [$username]);
-
-        if(count($result) == 0)
-            return false;
-        
-        $row = $result[0];
-
-        if($row->password == $password){
-            return true;
-        } else {
-            return false;
-        }
     }   
 }
